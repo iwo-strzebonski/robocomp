@@ -148,7 +148,8 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
+          content:
+            'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
         },
         {
           name: 'msapplication-TileImage',
