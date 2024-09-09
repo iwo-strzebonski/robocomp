@@ -107,7 +107,7 @@ const icons = [
   {
     rel: 'apple-touch-icon',
     type: 'image/png',
-    href: 'public/icons/apple-touch-icon.png',
+    href: '/icons/apple-touch-icon.png',
     sizes: '192x192'
   },
   {
