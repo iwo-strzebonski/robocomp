@@ -7,27 +7,27 @@ const properties = [
   {
     hid: 'og:locale',
     property: 'og:locale',
-    content: ''
+    content: 'pl_PL'
   },
   {
     hid: 'og:type',
     property: 'og:type',
-    content: ''
+    content: 'website'
   },
   {
     hid: 'og:title',
     property: 'og:title',
-    content: ''
+    content: 'Festiwal Robotyki ROBOCOMP'
   },
   {
     hid: 'og:description',
     property: 'og:description',
-    content: ''
+    content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
   },
   {
     hid: 'og:url',
     property: 'og:url',
-    content: ''
+    content: 'https://robocomp.info'
   },
   {
     hid: 'og:site_name',
@@ -37,7 +37,7 @@ const properties = [
   {
     hid: 'og:image',
     property: 'og:image',
-    content: ''
+    content: 'Festiwal Robotyki ROBOCOMP'
   }
 ]
 
@@ -48,14 +48,14 @@ const twitterProperties = [
     content: ''
   },
   {
-    hid: 'twitter:description',
-    name: 'twitter:description',
-    content: ''
-  },
-  {
     hid: 'twitter:title',
     name: 'twitter:title',
-    content: ''
+    content: 'Festiwal Robotyki ROBOCOMP'
+  },
+  {
+    hid: 'twitter:description',
+    name: 'twitter:description',
+    content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
   },
   {
     hid: 'twitter:image',
@@ -65,35 +65,67 @@ const twitterProperties = [
   {
     hid: 'twitter:site',
     name: 'twitter:site',
-    content: ''
+    content: 'https://robocomp.info'
   },
   {
     hid: 'twitter:creator',
     name: 'twitter:creator',
-    content: ''
+    content: '@integra_agh'
   }
 ]
 
 const icons = [
   {
     rel: 'icon',
+    type: 'image/x-icon',
+    href: '/favicon.ico'
+  },
+  {
+    rel: 'icon',
     type: 'image/png',
-    href: '',
+    href: '/icons/favicon-16x16.png',
+    sizes: '16x16'
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    href: '/icons/favicon-32x32.png',
     sizes: '32x32'
   },
   {
     rel: 'icon',
     type: 'image/png',
-    href: '',
+    href: '/icons/android-chrome-192x192.png',
     sizes: '192x192'
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    href: '/icons/android-chrome-384x384.png',
+    sizes: '384x384'
   },
   {
     rel: 'apple-touch-icon',
     type: 'image/png',
-    href: '',
+    href: 'public/icons/apple-touch-icon.png',
     sizes: '192x192'
+  },
+  {
+    rel: 'mask-icon',
+    href: '/icons/safari-pinned-tab.svg',
+    color: '#5bbad5'
   }
 ]
+
+const manifest = {
+  name: 'Festiwal Robotyki ROBOCOMP',
+  short_name: 'ROBOCOMP',
+  theme_color: '#ffffff',
+  icons: icons.map((icon) => ({
+    ...icon,
+    src: icon.href
+  }))
+}
 
 export default defineNuxtConfig({
   app: {
@@ -114,11 +146,11 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: ''
+          content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
         },
         {
           name: 'msapplication-TileImage',
-          content: ''
+          content: '/icons/mstile-150x150.png'
         },
         ...properties,
         ...twitterProperties
@@ -138,6 +170,7 @@ export default defineNuxtConfig({
 
   css: [
     '@/assets/css/content.css',
+    '@/assets/css/diana.css',
     '@/assets/css/flowbite.css',
     '@/assets/css/tailwind.css',
     '@/assets/css/main.css',
@@ -155,21 +188,20 @@ export default defineNuxtConfig({
 
   content: {
     documentDriven: true,
-    ignores: ['README.md', 'LICENSE.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']
+    ignores: ['README.md', 'LICENSE.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md'],
+    sources: {
+      content: {
+        driver: 'fs',
+        prefix: '',
+        base: resolve(__dirname, 'content/content')
+      }
+    }
   },
 
   pwa: {
     devOptions: { enabled: true },
     registerType: 'autoUpdate',
-    manifest: {
-      name: 'D',
-      short_name: 'D',
-      theme_color: '#ffffff',
-      icons: icons.map((icon) => ({
-        ...icon,
-        src: icon.href
-      }))
-    }
+    manifest
   },
 
   modules: [

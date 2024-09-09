@@ -1,11 +1,30 @@
 <script setup lang="ts">
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
 import { initFlowbite } from 'flowbite'
 
 const { $pwa } = useNuxtApp()
 
-onMounted(() => {
-  if ($pwa?.offlineReady) {
-    alert('App ready to work offline')
+onMounted(async () => {
+  if (!$pwa) {
+    return
+  }
+
+  if ($pwa.offlineReady) {
+    alert('App is ready to work offline')
+  }
+
+  if ($pwa.isInstalled) {
+    // alert('App is installed')
+
+    if ($pwa.needRefresh) {
+      alert('App has update available')
+
+      await $pwa.updateServiceWorker()
+      await $pwa.install()
+    }
+  } else {
+    $pwa.showInstallPrompt = true
+    $pwa.install()
   }
 
   // $pwa.update()
@@ -18,6 +37,7 @@ onBeforeMount(() => {
 
 <template>
   <div>
+    <SpeedInsights />
     <VitePwaManifest />
 
     <NuxtPage />

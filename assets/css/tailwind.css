@@ -13,7 +13,7 @@
   @apply ease-in-out;
   /* @apply delay-150; */
   @apply duration-300;
-  @apply text-black dark:text-white;
+  @apply text-white;
   @apply motion-reduce:transition-none;
   @apply motion-reduce:hover:transform-none;
   text-rendering: optimizeLegibility;
@@ -30,7 +30,7 @@
 }
 
 body {
-  @apply bg-white dark:bg-black;
+  @apply bg-black;
 }
 
 header a:not(.router-link-exact-active) span.nav {

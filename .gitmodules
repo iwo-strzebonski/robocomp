@@ -1,0 +1,3 @@
+[submodule "robocomp.content"]
+	path = robocomp.content
+	url = https://github.com/kn-integra/robocomp.content
