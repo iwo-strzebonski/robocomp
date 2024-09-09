@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import calculateCountdown from '~/helpers/calculateCountdown'
 
-const countdown = ref<string>(calculateCountdown());
+const countdown = ref<string>(calculateCountdown())
 
 onBeforeMount(() => {
   const currCountdown = calculateCountdown()
 
-  const interval = setInterval(() => {
-    countdown.value = calculateCountdown()
-  }, currCountdown.includes('.') ? 1 : 1000)
+  const interval = setInterval(
+    () => {
+      countdown.value = calculateCountdown()
+    },
+    currCountdown.includes('.') ? 1 : 1000
+  )
 
   onBeforeUnmount(() => {
-    clearInterval(interval);
-  });
-});
+    clearInterval(interval)
+  })
+})
 </script>
 
 <template>
