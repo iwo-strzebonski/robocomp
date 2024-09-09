@@ -17,12 +17,13 @@ const properties = [
   {
     hid: 'og:title',
     property: 'og:title',
-    content: 'Festiwal Robotyki ROBOCOMP'
+    content: 'ROBOCOMP'
   },
   {
     hid: 'og:description',
     property: 'og:description',
-    content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
+    content:
+      'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
   },
   {
     hid: 'og:url',
@@ -32,12 +33,12 @@ const properties = [
   {
     hid: 'og:site_name',
     property: 'og:site_name',
-    content: ''
+    content: 'Festiwal Robotyki ROBOCOMP'
   },
   {
     hid: 'og:image',
     property: 'og:image',
-    content: 'Festiwal Robotyki ROBOCOMP'
+    content: 'https://robocomp.info/icon.png'
   }
 ]
 
@@ -55,7 +56,8 @@ const twitterProperties = [
   {
     hid: 'twitter:description',
     name: 'twitter:description',
-    content: 'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
+    content:
+      'Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz pokazy firm związanych z robotyką, automatyką i elektroniką.'
   },
   {
     hid: 'twitter:image',
@@ -108,7 +110,7 @@ const icons = [
     rel: 'apple-touch-icon',
     type: 'image/png',
     href: '/icons/apple-touch-icon.png',
-    sizes: '192x192'
+    sizes: '180x180'
   },
   {
     rel: 'mask-icon',
