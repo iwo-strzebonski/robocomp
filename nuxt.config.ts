@@ -235,5 +235,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     secretKey: process.env.SECRET_KEY
-  }
+  },
+
+  plugins: ['~/plugins/db.js']
 })
