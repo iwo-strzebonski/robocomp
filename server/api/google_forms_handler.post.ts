@@ -1,9 +1,7 @@
 import { createKysely } from '@vercel/postgres-kysely'
 import { createError } from 'h3'
-import type { Database } from '~/types/Database'
+import type { Database } from '~/types/db/Database'
 import { isFormsResponse, type FormsResponse } from '~/types/Forms_response'
-
-const db = createKysely<Database>()
 
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody(event)
@@ -15,6 +13,8 @@ export default defineEventHandler(async (event) => {
     })
   }
   const body = rawBody as FormsResponse
+
+  const db = createKysely<Database>()
   // transactions are not supported yet, have to make it manually,
   // for now there will not be any reverting if something fails in the middle
 
@@ -90,7 +90,9 @@ export default defineEventHandler(async (event) => {
         })
       )
       .execute()
+    db.destroy()
   } catch {
+    db.destroy()
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
