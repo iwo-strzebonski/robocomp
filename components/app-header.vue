@@ -7,7 +7,11 @@
         <NuxtImg src="/images/logoHalfNoNeon.png" height="120px"></NuxtImg>
         <div class="flex">
           <div class="header-item" v-for="link in headerLinks">{{ link.name }}</div>
-          <div class="header-item" v-on:click="dropdownVisible = !dropdownVisible">H</div>
+          <div class="header-item" v-on:click="dropdownVisible = !dropdownVisible">
+            <lazy-client-only>
+              <fa-icon icon="fa-solid fa-burger" class="h-4 w-4" />
+            </lazy-client-only>
+          </div>
           <div class="hidden md:relative md:block" v-if="dropdownVisible">
             <div class="flex flex-col absolute top-[100%] right-[-100%] bg-white rounded-sm">
               <a class="p-[2rem] text-black" v-for="link in hamburgerLinks" :href="link.link"> {{ link.name }}</a>
@@ -32,7 +36,7 @@
       </div>
       <div class="w-full block md:hidden" v-if="dropdownVisible">
         <div class="flex flex-col text-center bg-white rounded-sm">
-          <a class="p-[2rem] text-black" v-for="link in hamburgerLinks" :href="link.link"> {{ link.name }}</a>
+          <a class="p-[2rem] text-black" v-for="link in links" :href="link.link"> {{ link.name }}</a>
         </div>
       </div>
     </div>

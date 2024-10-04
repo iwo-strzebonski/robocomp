@@ -4,6 +4,7 @@ import NotFound from '@/components/slots/not-found.vue'
 </script>
 
 <template>
+  <LandingPage></LandingPage>
   <NuxtLayout>
     <div class="content-page markdown-content">
       <main class="prose prose-sm md:prose-lg dark:prose-invert container mx-auto my-8 px-4 lg:px-0">
