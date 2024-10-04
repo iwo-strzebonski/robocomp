@@ -1,11 +1,11 @@
-import type Address from './Address'
-import type ParticipantDB from './ParticipantDB'
-import type RobotDB from './RobotDB'
-import type Team from './Team'
+import type ParticipantTable from './Participants'
+import type RobotTable from './Robots'
+import type TeamTable from './Teams'
+import type TeamsParticipantsTable from './TeamsParticipants'
 
 export interface Database {
-  'robocomp.address': Address
-  'robocomp.teams': Team
-  'robocomp.participants': ParticipantDB
-  'robocomp.robots': RobotDB
+  'robocomp.teams_participants': TeamsParticipantsTable
+  'robocomp.teams': TeamTable
+  'robocomp.participants': ParticipantTable
+  'robocomp.robots': RobotTable
 }
