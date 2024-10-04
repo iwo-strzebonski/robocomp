@@ -1,42 +1,21 @@
+import type { H3Error } from 'h3'
+import type { MetaAlbum, MetaAlbumsData, MetaArray } from '~/types/meta'
+
 const runtimeConfig = useRuntimeConfig()
 
-export interface MetaCursors {
-  before: string
-  after: string
+export interface AlbumResponse {
+  data: MetaArray<MetaAlbum>['data']
+  statusCode: number
 }
 
-export interface MetaPaging {
-  cursors: MetaCursors
-  previous?: string
-  next?: string
-}
-
-export interface MetaArray<T> {
-  data: T[]
-  paging: MetaPaging
-}
-
-export interface MetaPhoto {
-  id: string
-  link: string
-}
-
-export interface MetaAlbum {
-  id: string
-  name: string
-  photos: MetaArray<MetaPhoto>
-}
-
-export interface MetaAlbumsResponse extends MetaArray<MetaAlbum> {}
-
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (): Promise<AlbumResponse | H3Error> => {
   try {
     const query = new URLSearchParams({
-      fields: 'photos{link},name',
+      fields: 'photos{link,webp_images},name,link',
       access_token: runtimeConfig.META_API_KEY
     })
 
-    const response = await $fetch<MetaAlbumsResponse>(
+    const response = await $fetch<MetaAlbumsData>(
       `${runtimeConfig.META_GRAPH_ENDPOINT}/${runtimeConfig.META_GRAPH_VERSION}/${runtimeConfig.ROBOCOMP_PAGE_ID}/albums?${query.toString()}`
     )
 
@@ -46,23 +25,29 @@ export default defineEventHandler(async () => {
       name: v.name.match(/robocomp (\d{4})/i)![1]
     }))
 
-    const processed = mapped.reduce((acc, v) => {
-      const i = acc.findIndex((p) => p.name === v.name)
+    const processed = mapped.reduce(
+      (acc, v) => {
+        const i = acc.findIndex((p) => p.name === v.name)
 
-      if (i === -1) {
-        acc.push(v)
-      } else {
+        if (i === -1) {
+          acc.push(v)
+        }
+        /* else {
         acc[i].photos.data.push(...v.photos.data)
-      }
+      } */
 
-      return acc
-    }, [] as MetaAlbum[])
+        return acc
+      },
+      [] as MetaArray<MetaAlbum>['data']
+    )
 
     return {
-      status: 200,
+      statusCode: 200,
       data: processed
     }
   } catch (error) {
+    console.error(error)
+
     return createError({
       statusCode: 500,
       message: (error as Error).message
