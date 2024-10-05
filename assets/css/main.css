@@ -46,3 +46,12 @@ a {
 .index-page.page-leave-active {
   transition: all 0.4s;
 }
+
+.before-box {
+  @apply relative;
+}
+
+.before-box::before {
+  content: '';
+  @apply absolute w-full h-full -top-3 -left-3.5 -z-10;
+}

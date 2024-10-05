@@ -1,21 +1,14 @@
 <template>
-  <footer class="bg-gray-100 dark:bg-zinc-800 p-4 inline-flex gap-4">
-    <NuxtLink to="http://www.integra.agh.edu.pl/" target="_blank" rel="noopener noreferrer">
-      <NuxtImg
-        src="https://i.postimg.cc/T2NmZ0t5/integra-logo.png"
-        alt="KN Integra Logo"
-        width="100"
-        height="100"
-      />
-    </NuxtLink>
+  <footer class="bg-black text-white flex flex-col sm:flex-row justify-between gap-y-2 px-8 py-4 md:px-16 sm:py-8">
+    <span>
+      © {{ new Date().getFullYear() }}
+      <NuxtLink to="http://www.integra.agh.edu.pl" class="underline cursor-pointer">KN Integra</NuxtLink>
+    </span>
 
-    <NuxtLink to="/">
-      <NuxtImg
-        src="/icon.png"
-        alt="ROBOCOMP Logo"
-        width="100"
-        height="100"
-      />
-    </NuxtLink>
+    <span class="inline-flex gap-4 sm:gap-8">
+      <NuxtLink to="/blog/about" class="underline cursor-pointer">O nas</NuxtLink>
+      <NuxtLink to="/blog/regulations" class="underline cursor-pointer">Regulamin</NuxtLink>
+      <NuxtLink to="/blog/contact" class="underline cursor-pointer">Kontakt</NuxtLink>
+    </span>
   </footer>
 </template>
