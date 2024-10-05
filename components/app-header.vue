@@ -1,20 +1,26 @@
 <template>
   <header id="page-header">
-
     <div class="hidden md:block">
       <div class="flex items-center justify-between">
-
-        <NuxtImg src="/images/logoHalfNoNeon.png" height="120px"></NuxtImg>
+        <NuxtLink to="/">
+          <NuxtImg src="/landing-page-img/logoHalfNoNeon.png" height="128px" class="ml-4"></NuxtImg>
+        </NuxtLink>
         <div class="flex">
-          <div class="header-item" v-for="link in headerLinks">{{ link.name }}</div>
-          <div class="header-item" v-on:click="dropdownVisible = !dropdownVisible">
+          <NuxtLink v-for="link in headerLinks" class="header-item" :to="link.link">
+            {{ link.name }}
+          </NuxtLink>
+          <div class="header-item inline-flex items-center py-0 cursor-pointer"
+            v-on:click="dropdownVisible = !dropdownVisible">
             <lazy-client-only>
-              <fa-icon icon="fa-solid fa-burger" class="h-4 w-4" />
+              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4" />
             </lazy-client-only>
           </div>
           <div class="hidden md:relative md:block" v-if="dropdownVisible">
-            <div class="flex flex-col absolute top-[100%] right-[-100%] bg-white rounded-sm">
-              <a class="p-[2rem] text-black" v-for="link in hamburgerLinks" :href="link.link"> {{ link.name }}</a>
+            <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left">
+              <NuxtLink class="p-8 text-black hover:bg-neutral-200" v-for="link in hamburgerLinks" :to="link.link">
+                {{ link.name }}
+              </NuxtLink>
+              <!-- TODO - animacja wjazd z lewej do prawej -->
             </div>
           </div>
         </div>
@@ -24,41 +30,35 @@
 
     <div class="block md:hidden">
       <div class="flex items-center justify-between">
-        <NuxtImg src="/images/logoHalfNoNeon.png" height="120px"></NuxtImg>
+        <NuxtImg src="/landing-page-img/logoHalfNoNeon.png" height="128px" class="ml-4 mt-2 cursor-pointer"></NuxtImg>
         <div class="flex">
-          <div class="header-item" v-on:click="dropdownVisible = !dropdownVisible">H</div>
-          <div class="hidden md:relative md:block" v-if="dropdownVisible">
-            <div class="flex flex-col absolute top-[100%] right-[-100%] bg-white rounded-sm">
-              <a class="p-[2rem] text-black" v-for="link in links" :href="link.link"> {{ link.name }}</a>
-            </div>
+          <div class="header-item cursor-pointer" v-on:click="dropdownVisible = !dropdownVisible">
+            <lazy-client-only>
+              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4" />
+            </lazy-client-only>
           </div>
         </div>
       </div>
-      <div class="w-full block md:hidden" v-if="dropdownVisible">
+      <div class="w-full absolute slide-in-up md:hidden" v-if="dropdownVisible">
         <div class="flex flex-col text-center bg-white rounded-sm">
-          <a class="p-[2rem] text-black" v-for="link in links" :href="link.link"> {{ link.name }}</a>
+          <NuxtLink class="p-8 text-black hover:bg-neutral-200 cursor-pointer" v-for="link in links" :to="link.link"> 
+            {{ link.name }}
+          </NuxtLink>
         </div>
       </div>
     </div>
-
-
-
-
-
 
   </header>
 </template>
 
 <script lang="ts" setup>
 
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-
 
 const links = [
   { name: "Atrakcje", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   { name: "Wyniki", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Głosowanie", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   { name: "Rejestracja", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+  { name: "Głosowanie", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   { name: "Kontakt", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   { name: "O\xa0nas", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
   { name: "Galeria", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
@@ -75,6 +75,24 @@ let dropdownVisible = ref(false);
 
 <style>
 .header-item {
-  @apply p-[2rem]
+  @apply p-8
+}
+
+.slide-in-up {
+  transform: translateY(-100%);
+  animation: slide-in-u 0.5s forwards;
+}
+
+.slide-in-left {
+  transform: translateX(100%);
+  animation: slide-in-l 0.5s forwards;
+}
+
+@keyframes slide-in-u {
+    100% { transform: translateY(0%); }
+}
+
+@keyframes slide-in-l {
+    100% { transform: translateX(0%); }
 }
 </style>
