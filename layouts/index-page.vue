@@ -3,8 +3,5 @@
     <LandingPage />
 
     <slot></slot>
-
-    <BigFooter class="mt-auto" />
-    <AppFooter />
   </div>
 </template>

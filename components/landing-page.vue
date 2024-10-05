@@ -15,11 +15,12 @@
           pokazy firm związanych z robotyką, automatyką i elektroniką.
         </span>
 
-        <button
+        <NuxtLink
           class="rounded-full bg-blue-500 hover:bg-blue-600 px-8 py-4 self-center uppercase text-white tracking-[.15rem]"
+          to="/blog/registration"
         >
           Dołącz do nas
-        </button>
+        </NuxtLink>
       </div>
 
       <NuxtImg src="/img/landing-page/arm-robocomp.png" class="hidden md:block" />

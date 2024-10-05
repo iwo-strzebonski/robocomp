@@ -4,14 +4,19 @@ import { H3Error } from 'h3'
 
 import type { AlbumResponse } from '~/server/api/meta/albums.get'
 
-const { data: galleryData, pending: galleryPending } = useLazyFetch<AlbumResponse | H3Error>('/api/meta/albums')
+const { data: galleryData, status } = useLazyFetch<AlbumResponse | H3Error>('/api/meta/albums')
 </script>
 
 <template>
   <lazy-client-only>
-    <span v-if="galleryPending">Loading...</span>
+    <span v-if="status === 'pending'">Ładowanie...</span>
 
-    <fwb-accordion v-else-if="galleryData && !(galleryData instanceof H3Error)" always-open flush class="fwb-accordion">
+    <fwb-accordion
+      v-else-if="status === 'success' && galleryData && !(galleryData instanceof H3Error)"
+      always-open
+      flush
+      class="fwb-accordion"
+    >
       <fwb-accordion-panel v-for="yearData in galleryData.data" :key="yearData.name">
         <fwb-accordion-header class="fwb-accorion-header before-box before:bg-sky-400">
           <h3 class="font-semibold block w-max text-white !text-2xl !m-0">Edycja {{ yearData.name }}</h3>

@@ -20,7 +20,7 @@
             </lazy-client-only>
           </div>
 
-          <div v-show="dropdownVisible" class="hidden md:relative md:block">
+          <div v-show="dropdownVisible" class="hidden md:relative md:block z-40">
             <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left">
               <NuxtLink
                 v-for="link in hamburgerLinks"
@@ -50,13 +50,14 @@
         </div>
       </div>
 
-      <div v-show="dropdownVisible" class="w-full absolute slide-in-up md:hidden">
+      <div v-show="dropdownVisible" class="w-full absolute slide-in-up md:hidden z-40">
         <div class="flex flex-col text-center bg-white rounded-sm">
           <NuxtLink
-            v-for="link in links"
+            v-for="link in filteredLinks"
             :key="link.name"
             class="p-8 text-black hover:bg-neutral-200 cursor-pointer"
             :to="link.link"
+            @click="dropdownVisible = false"
           >
             {{ link.name }}
           </NuxtLink>
@@ -77,10 +78,22 @@ const links = [
   { name: 'Galeria', link: '/blog/gallery' }
 ]
 
+const $route = useRoute()
+
+const filteredLinks = computed(() => {
+  const filtered = links.filter((link) => link.link !== $route.path)
+
+  if (filtered.length < links.length) {
+    filtered.unshift({ name: 'Strona główna', link: '/' })
+  }
+
+  return filtered
+})
+
 const hamburgerIndex = 3
 
-const headerLinks = links.slice(0, hamburgerIndex)
-const hamburgerLinks = links.slice(hamburgerIndex, -1)
+const headerLinks = computed(() => filteredLinks.value.slice(0, hamburgerIndex))
+const hamburgerLinks = computed(() => filteredLinks.value.slice(hamburgerIndex, -1))
 const dropdownVisible = ref(false)
 </script>
 

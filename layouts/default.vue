@@ -3,7 +3,5 @@
     <AppHeader class="bg-black" />
 
     <slot></slot>
-
-    <AppFooter class="mt-auto" />
   </div>
 </template>

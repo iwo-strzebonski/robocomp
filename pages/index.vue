@@ -8,19 +8,20 @@ definePageMeta({
 </script>
 
 <template>
-  <NuxtLayout>
-    <div class="content-page markdown-content">
-      <main class="dark:prose-invert container mx-auto my-8 px-4 lg:px-0">
-        <content-doc>
-          <template #not-found>
-            <not-found />
-          </template>
+  <div class="content-page markdown-content flex flex-col flex-1">
+    <main class="dark:prose-invert container mx-auto my-8 px-4 lg:px-0 flex-1">
+      <content-doc>
+        <template #not-found>
+          <not-found />
+        </template>
 
-          <template #empty>
-            <empty-doc />
-          </template>
-        </content-doc>
-      </main>
-    </div>
-  </NuxtLayout>
+        <template #empty>
+          <empty-doc />
+        </template>
+      </content-doc>
+    </main>
+
+    <BigFooter class="mt-auto" />
+    <AppFooter />
+  </div>
 </template>
