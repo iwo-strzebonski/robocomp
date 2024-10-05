@@ -1,9 +1,7 @@
-
 <template>
   <div class="min-h-screen w-full overflow-y-auto overflow-x-none flex flex-col">
-    <AppHeader></AppHeader>
-    <slot></slot>
+    <AppHeader class="bg-black" />
 
-    <AppFooter class="mt-auto" />
+    <slot></slot>
   </div>
 </template>

@@ -3,79 +3,103 @@
     <div class="hidden md:block">
       <div class="flex items-center justify-between">
         <NuxtLink to="/">
-          <NuxtImg src="/landing-page-img/logoHalfNoNeon.png" height="128px" class="ml-4"></NuxtImg>
+          <NuxtImg src="/img/landing-page/logoHalfNoNeon.png" height="128px" class="ml-4 mb-2" />
         </NuxtLink>
+
         <div class="flex">
-          <NuxtLink v-for="link in headerLinks" class="header-item" :to="link.link">
+          <NuxtLink v-for="link in headerLinks" :key="link.name" class="header-item text-white" :to="link.link">
             {{ link.name }}
           </NuxtLink>
-          <div class="header-item inline-flex items-center py-0 cursor-pointer"
-            v-on:click="dropdownVisible = !dropdownVisible">
+
+          <div
+            class="header-item inline-flex items-center py-0 cursor-pointer"
+            @click="dropdownVisible = !dropdownVisible"
+          >
             <lazy-client-only>
-              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4" />
+              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4 text-white" />
             </lazy-client-only>
           </div>
-          <div class="hidden md:relative md:block" v-if="dropdownVisible">
+
+          <div v-show="dropdownVisible" class="hidden md:relative md:block z-40">
             <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left">
-              <NuxtLink class="p-8 text-black hover:bg-neutral-200" v-for="link in hamburgerLinks" :to="link.link">
+              <NuxtLink
+                v-for="link in hamburgerLinks"
+                :key="link.name"
+                class="p-8 text-black hover:bg-neutral-200"
+                :to="link.link"
+              >
                 {{ link.name }}
               </NuxtLink>
-              <!-- TODO - animacja wjazd z lewej do prawej -->
+              <!-- TODO - animacja wjazd z prawej do lewej -->
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
     <div class="block md:hidden">
       <div class="flex items-center justify-between">
-        <NuxtImg src="/landing-page-img/logoHalfNoNeon.png" height="128px" class="ml-4 mt-2 cursor-pointer"></NuxtImg>
+        <NuxtImg src="/img/landing-page/logoHalfNoNeon.png" height="128px" class="ml-4 my-2 cursor-pointer" />
+
         <div class="flex">
-          <div class="header-item cursor-pointer" v-on:click="dropdownVisible = !dropdownVisible">
+          <div class="header-item cursor-pointer" @click="dropdownVisible = !dropdownVisible">
             <lazy-client-only>
-              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4" />
+              <fa-icon icon="fa-solid fa-bars" class="h-4 w-4 text-white" />
             </lazy-client-only>
           </div>
         </div>
       </div>
-      <div class="w-full absolute slide-in-up md:hidden" v-if="dropdownVisible">
+
+      <div v-show="dropdownVisible" class="w-full absolute slide-in-up md:hidden z-40">
         <div class="flex flex-col text-center bg-white rounded-sm">
-          <NuxtLink class="p-8 text-black hover:bg-neutral-200 cursor-pointer" v-for="link in links" :to="link.link"> 
+          <NuxtLink
+            v-for="link in filteredLinks"
+            :key="link.name"
+            class="p-8 text-black hover:bg-neutral-200 cursor-pointer"
+            :to="link.link"
+            @click="dropdownVisible = false"
+          >
             {{ link.name }}
           </NuxtLink>
         </div>
       </div>
     </div>
-
   </header>
 </template>
 
 <script lang="ts" setup>
-
-
 const links = [
-  { name: "Atrakcje", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Wyniki", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Rejestracja", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Głosowanie", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Kontakt", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "O\xa0nas", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-  { name: "Galeria", link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-];
+  { name: 'Atrakcje', link: '/blog/agenda' },
+  // { name: 'Wyniki', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  // { name: 'Rejestracja', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  // { name: 'Głosowanie', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  // { name: 'Kontakt', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  // { name: 'O\xA0nas', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  { name: 'Galeria', link: '/blog/gallery' }
+]
 
-let hamburgerIndex = 3;
+const $route = useRoute()
 
-let headerLinks = links.slice(0, hamburgerIndex);
-let hamburgerLinks = links.slice(hamburgerIndex, -1);
-let dropdownVisible = ref(false);
+const filteredLinks = computed(() => {
+  const filtered = links.filter((link) => link.link !== $route.path)
 
+  if (filtered.length < links.length) {
+    filtered.unshift({ name: 'Strona główna', link: '/' })
+  }
 
+  return filtered
+})
+
+const hamburgerIndex = 3
+
+const headerLinks = computed(() => filteredLinks.value.slice(0, hamburgerIndex))
+const hamburgerLinks = computed(() => filteredLinks.value.slice(hamburgerIndex, -1))
+const dropdownVisible = ref(false)
 </script>
 
 <style>
 .header-item {
-  @apply p-8
+  @apply p-8;
 }
 
 .slide-in-up {
@@ -89,10 +113,14 @@ let dropdownVisible = ref(false);
 }
 
 @keyframes slide-in-u {
-    100% { transform: translateY(0%); }
+  100% {
+    transform: translateY(0%);
+  }
 }
 
 @keyframes slide-in-l {
-    100% { transform: translateX(0%); }
+  100% {
+    transform: translateX(0%);
+  }
 }
 </style>

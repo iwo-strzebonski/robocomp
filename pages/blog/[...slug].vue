@@ -4,19 +4,19 @@ import NotFound from '@/components/slots/not-found.vue'
 </script>
 
 <template>
-  <NuxtLayout>
-    <div class="content-page markdown-content">
-      <main class="container prose-sm md:prose-lg lg:prose-xl dark:prose-invert mx-auto my-8 px-4 lg:px-0">
-        <content-doc>
-          <template #not-found>
-            <not-found />
-          </template>
+  <div class="content-page markdown-content flex flex-col flex-1">
+    <main class="container flex-1 prose-sm md:prose-lg lg:prose-xl dark:prose-invert mx-auto my-8 px-4 lg:px-0">
+      <content-doc>
+        <template #not-found>
+          <not-found />
+        </template>
 
-          <template #empty>
-            <empty-doc />
-          </template>
-        </content-doc>
-      </main>
-    </div>
-  </NuxtLayout>
+        <template #empty>
+          <empty-doc />
+        </template>
+      </content-doc>
+    </main>
+
+    <AppFooter class="mt-auto" />
+  </div>
 </template>
