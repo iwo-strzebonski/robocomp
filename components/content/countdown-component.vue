@@ -20,8 +20,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="inline-flex gap-2">
-    <h2 class="!my-0">Czas do wydarzenia:</h2>
-    <span class="text-xl">{{ countdown }}</span>
-  </div>
+  <h2 class="!my-0">
+    Czas do wydarzenia: <span>{{ countdown }}</span>
+  </h2>
 </template>
