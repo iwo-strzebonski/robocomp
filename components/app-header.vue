@@ -69,7 +69,8 @@
 
 <script lang="ts" setup>
 const links = [
-  { name: 'Atrakcje', link: '/blog/agenda' },
+  { name: 'Harmonogram', link: '/blog/agenda' },
+  { name: 'Regulaminy', link: '/blog/regulations' },
   // { name: 'Wyniki', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   // { name: 'Rejestracja', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   // { name: 'Głosowanie', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
