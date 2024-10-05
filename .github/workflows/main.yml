@@ -19,7 +19,7 @@ jobs:
     - name: Checkout submodules
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.CI_TOKEN }}
+        token: ${{ secrets.APP_CI_TOKEN }}
         submodules: true
         fetch-depth: 0
 
@@ -56,7 +56,7 @@ jobs:
     - name: Snyk
       uses: snyk/actions@0.4.0
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
       with:
         command: monitor
 
