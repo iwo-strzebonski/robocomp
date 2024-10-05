@@ -1,3 +1,5 @@
+import { GALLERY_IMG_SIZE_PX } from '~/settings/constants'
+
 import type { H3Error } from 'h3'
 import type { MetaAlbum, MetaAlbumsData, MetaArray } from '~/types/meta'
 
@@ -41,9 +43,22 @@ export default defineEventHandler(async (): Promise<AlbumResponse | H3Error> => 
       [] as MetaArray<MetaAlbum>['data']
     )
 
+    const withFilteredImages = processed.map((v) => ({
+      ...v,
+      photos: {
+        ...v.photos,
+        data: v.photos.data.map((img) => ({
+          ...img,
+          webp_images: img.webp_images
+            .filter((i) => (i.width > i.height ? i.width : i.height) < GALLERY_IMG_SIZE_PX)
+            .sort((a, b) => b.width - a.width)
+        }))
+      }
+    }))
+
     return {
       statusCode: 200,
-      data: processed
+      data: withFilteredImages
     }
   } catch (error) {
     console.error(error)

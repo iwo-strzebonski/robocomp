@@ -6,7 +6,7 @@ import NotFound from '@/components/slots/not-found.vue'
 <template>
   <NuxtLayout>
     <div class="content-page markdown-content">
-      <main class="prose prose-sm md:prose-lg dark:prose-invert container mx-auto my-8 px-4 lg:px-0">
+      <main class="container prose-sm md:prose-lg lg:prose-xl dark:prose-invert mx-auto my-8 px-4 lg:px-0">
         <content-doc>
           <template #not-found>
             <not-found />
