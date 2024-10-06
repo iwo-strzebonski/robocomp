@@ -1,10 +1,23 @@
 //Google AppScript
 //Not sure Where to put this file, but I think It should be stored somewhere on out repo, I am open for suggestions
-function onFormSubmit(e) {
+
+/**
+ * Send form data to an API endpoint
+ * @param e Form response event
+ * @param apiUrl URL to send the form data to
+ * @example
+ * const API_URL = 'https://api.example.com'
+ *
+ * function onFormSubmit(e) {
+ *   submitForm(e, API_URL)
+ * }
+ */
+function submitForm(e, apiUrl) {
   const response = e.response
   const itemResponses = response.getItemResponses()
   const formResponse = {}
   const email = response.getRespondentEmail()
+
   itemResponses.forEach((itemResponses) => {
     const itemTitle = itemResponses.getItem().getId()
     const value = itemResponses.getResponse()
@@ -70,6 +83,7 @@ function onFormSubmit(e) {
     formResponse['1452469857']
   ]
   const participants = []
+
   for (var i = 0; i < formResponse['1652360394']; i++) {
     participants.push({
       email: emails[i],
@@ -82,30 +96,36 @@ function onFormSubmit(e) {
       country: countries[i]
     })
   }
+
   const robotNames = [formResponse['41413901'], formResponse['1754831184'], formResponse['149992907']]
   const robotCompetitions = [formResponse['320180773'], formResponse['561738399'], formResponse['1090064681']]
   const competitionDict = {
-    'Standard Sumo': 'sumo',
-    'LEGO Sumo': 'lego-sumo',
-    'Mini Sumo': 'mini-sumo',
-    'Line Follower Standard': 'line-follower',
-    'Smash Bot Mini': 'mini-smashbot',
-    'Micromouse': 'micromouse'
+    'Standard Sumo': 'sumo-standard',
+    'LEGO Sumo': 'sumo-lego',
+    'Mini Sumo': 'sumo-mini',
+    'Mikro Sumo': 'sumo-micro',
+    'Mini Smash Bot': 'smashbot-mini',
+    'Freestyle': 'freestyle',
+    'Line Follower Standard': 'linefollower-standard',
+    'Line Follower Enhanced': 'linefollower-enhanced',
+    'Micromouse': 'micromouse',
+    'Robosprint': 'robosprint'
   }
+
   const robots = []
+
   for (var i = 0; i < formResponse['1436390431']; i++) {
     robots.push({
       name: robotNames[i],
       competition: competitionDict[robotCompetitions[i]]
     })
   }
+
   const formatedData = {
     team_name: formResponse['555300143'],
     participants,
     robots
   }
-
-  const apiUrl = 'https://robocomp-app-robocomp.vercel.app/api/google_forms_handler'
 
   const options = {
     method: 'POST',
@@ -121,3 +141,4 @@ function onFormSubmit(e) {
     Logger.log('Error sending form data: ' + error.toString())
   }
 }
+
