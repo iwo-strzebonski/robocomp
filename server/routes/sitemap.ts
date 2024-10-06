@@ -6,6 +6,7 @@ import getSitemapStream from '@/helpers/getSitemapStream'
 
 import type { SitemapXML } from '@/types'
 
+// eslint-disable-next-line import/no-unresolved
 import { serverQueryContent } from '#content/server'
 
 interface IPageMeta {
@@ -17,6 +18,7 @@ export default defineEventHandler(async (event) => {
   const docs = await serverQueryContent(event).find()
   const sitemap = await getSitemapStream(event)
   const sitemapString = (await streamToPromise(sitemap)).toString()
+  // eslint-disable-next-line import/no-named-as-default-member
   const sitemapJSON = convert.xml2js(sitemapString, { compact: true }) as SitemapXML
   const hostname = checkForLocalhost(event.node.req.headers.host as string)
     ? `http://${event.node.req.headers.host}`

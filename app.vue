@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 import { initFlowbite } from 'flowbite'
 
 const { $pwa } = useNuxtApp()
@@ -40,6 +40,8 @@ onBeforeMount(() => {
     <SpeedInsights />
     <VitePwaManifest />
 
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

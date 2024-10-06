@@ -46,7 +46,7 @@ const twitterProperties = [
   {
     hid: 'twitter:card',
     name: 'twitter:card',
-    content: ''
+    content: 'https://robocomp.info/icon.png'
   },
   {
     hid: 'twitter:title',
@@ -62,7 +62,7 @@ const twitterProperties = [
   {
     hid: 'twitter:image',
     name: 'twitter:image',
-    content: ''
+    content: 'https://robocomp.info/icon.png'
   },
   {
     hid: 'twitter:site',
@@ -172,14 +172,13 @@ export default defineNuxtConfig({
   },
 
   css: [
+    '@/assets/css/main.css',
+    '@/assets/css/tailwind.css',
+    '@/assets/css/flowbite.css',
     '@/assets/css/content.css',
     '@/assets/css/diana.css',
-    '@/assets/css/flowbite.css',
-    '@/assets/css/tailwind.css',
-    '@/assets/css/main.css',
-    '@/assets/css/markdown.css',
-    '@/assets/css/treeview.css',
-    'vue3-treeview/dist/style.css'
+    'vue3-treeview/dist/style.css',
+    '@/assets/css/treeview.css'
   ],
 
   components: true,
@@ -208,6 +207,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxtjs/robots',
     '@nuxt/content',
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
@@ -234,6 +234,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    secretKey: process.env.SECRET_KEY
+    META_API_KEY: process.env.META_API_KEY,
+    META_GRAPH_ENDPOINT: process.env.META_GRAPH_ENDPOINT,
+    META_GRAPH_VERSION: process.env.META_GRAPH_VERSION,
+    ROBOCOMP_PAGE_ID: process.env.ROBOCOMP_PAGE_ID
   }
 })
