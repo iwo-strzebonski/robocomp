@@ -25,3 +25,15 @@
 .markdown-content a {
   @apply underline text-sky-500;
 }
+
+.markdown-content .map-container {
+  @apply flex flex-col md:flex-row items-center md:items-start justify-between gap-4;
+}
+
+.markdown-content .map-container iframe {
+  @apply w-full md:w-2/3 h-full aspect-video;
+}
+
+.markdown-content .map-container address {
+  @apply flex flex-row justify-start md:flex-col text-2xl lg:text-3xl;
+}
