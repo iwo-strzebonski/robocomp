@@ -2,7 +2,7 @@ import type { Generated, Insertable, Selectable, Updateable } from 'kysely'
 
 export default interface TeamsParticipantsTable {
   teams_id: number
-  participant_id: number
+  participants_id: number
   role: Generated<string>
   status: Generated<string>
 }

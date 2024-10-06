@@ -2,22 +2,39 @@ import { createKysely } from '@vercel/postgres-kysely'
 import { createError } from 'h3'
 import { sql } from 'kysely'
 import type { Database } from '~/types/db/Database'
+import type ParticipantTable from '~/types/db/Participants'
+import type { ParticipantRow } from '~/types/db/Participants'
+import type { RobotRow } from '~/types/db/Robots'
+import type RobotTable from '~/types/db/Robots'
 import type { TeamRow } from '~/types/db/Teams'
 import type TeamTable from '~/types/db/Teams'
-import { isFormsResponse, type FormsResponse } from '~/types/Forms_response'
+import type TeamsParticipantsTable from '~/types/db/TeamsParticipants'
+import { type TeamsParticipantsRow } from '~/types/db/TeamsParticipants'
+import { isFormsResponse, type FormsResponse, type Participant, type Robot } from '~/types/Forms_response'
 
 function insertUpdateTeam(team_name: string) {
   return sql<TeamTable>`robocomp.fn_insert_update_team(${sql.lit(team_name)})`
+}
+function insertUpdateParticipant(participant: Participant) {
+  return sql<ParticipantTable>`robocomp.fn_insert_update_participant(${sql.lit(participant.first_name)},${sql.lit(participant.last_name)},${sql.lit(participant.email)},${sql.lit(participant.phone)},${sql.lit(participant.street_address)},${sql.lit(participant.admin_level_2)},${sql.lit(participant.postal_code)},${sql.lit(participant.country)})`
+}
+//the robot numer must be unique
+function insertUpdateRobot(robot: Robot, team_id: number, robot_no: number) {
+  return sql<RobotTable>`robocomp.fn_insert_update_robot(${sql.lit(robot_no)},${sql.lit(robot.name)},2024::smallint,${sql.lit(team_id)},${sql.lit(robot.competition)})`
+}
+
+function connectTeamParticipant(participant_id: number, team_id: number, role: string) {
+  return sql<TeamsParticipantsTable>`robocomp.fn_connect_participant_and_team(${sql.lit(participant_id)},${sql.lit(team_id)},${sql.lit(role)})`
+}
+
+function getNextRobotNo() {
+  return sql`robocomp.fn_get_next_robot_no()`
 }
 
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody(event)
   if (!isFormsResponse(rawBody)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Bad Request',
-      message: 'Invalid form data'
-    })
+    throw 'Invalid form data'
   }
   const body = rawBody as FormsResponse
 
@@ -31,61 +48,78 @@ export default defineEventHandler(async (event) => {
       .where('email', '=', body.participants[0].email)
       .execute()
     if (participant_team_id.length !== 0) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Bad Request',
-        message: 'Edits are not yet supported'
-      })
-      // // the request is an edit request
-      // const addresses_to_del = await db
-      //   .deleteFrom('robocomp.participants')
-      //   .where('team', '=', participant_team_id.team)
-      //   .returning('address')
-      //   .execute()
-
-      // await db
-      //   .deleteFrom('robocomp.address')
-      //   .where(
-      //     'id',
-      //     'in',
-      //     addresses_to_del.map((a) => {
-      //       return a.address
-      //     })
-      //   )
-      //   .execute()
-      // await db.deleteFrom('robocomp.robots').where('team', '=', participant_team_id.team).execute()
-      // await db.deleteFrom('robocomp.teams').where('id', '=', participant_team_id.team).execute()
+      throw 'Edits are not yet supported'
     }
+    // Create a team
     const team = await sql<TeamRow[]>`SELECT * FROM ${insertUpdateTeam(body.team_name)}`.execute(db)
-    console.log(team)
-    // const participant_data = []
-    // for (let i = 0; i < body.participants.length; i++) {
-    //   participant_data.push({
-    //     address: addresses[i].id ?? 0, // Tis should be definitely changed somehow, but idk how
-    //     team: team.id ?? 0,
-    //     first_name: body.participants[i].first_name,
-    //     last_name: body.participants[i].last_name,
-    //     email: body.participants[i].email,
-    //     phone: body.participants[i].phone
-    //   })
-    // }
-    // await db.insertInto('robocomp.participants').values(participant_data).returningAll().execute()
-    // await db
-    //   .insertInto('robocomp.robots')
-    //   .values(
-    //     body.robots.map((r: any) => {
-    //       return { ...r, team: team.id }
-    //     })
-    //   )
-    //   .execute()
+    if (!team || team.rows.length === 0) {
+      throw 'Something went wrong while creating team'
+    }
+    //@ts-ignore, Idk why but it returns a different structure
+    const team_id = team.rows[0].fn_insert_update_team
+    const emails = body.participants.map((p) => p.email)
+    // Check if participants are already registered
+    const existing_participants = await db
+      .selectFrom('robocomp.teams_participants as tp')
+      .innerJoin('robocomp.teams as t', 'tp.teams_id', 't.id')
+      .innerJoin('robocomp.participants as p', 'tp.participants_id', 'p.id')
+      .select('p.id')
+      .where('t.year', '=', new Date().getFullYear())
+      .where('p.email', 'in', emails)
+      .execute()
+    if (existing_participants.length !== 0) {
+      throw 'Some of the participants are already registered'
+    }
+    // add participants
+    // I don't know how (if that even is possible to insert all participants as a single query with postgresql function)
+    let participants = []
+    try {
+      const participants_response = await Promise.all(
+        body.participants.map((p) => sql<ParticipantRow>`SELECT * FROM ${insertUpdateParticipant(p)}`.execute(db))
+      )
+      // @ts-ignore
+      participants = participants_response.map((pr) => pr.rows[0].fn_insert_update_participant)
+    } catch {
+      throw 'Something went wrong while creating participants'
+    }
+
+    // add robots
+    let robots = []
+    const robot_no_res = await sql`SELECT * FROM ${getNextRobotNo()}`.execute(db)
+    // @ts-ignore
+    let robot_no = robot_no_res.rows[0].fn_get_next_robot_no - 1
+    try {
+      const robots_response = await Promise.all(
+        body.robots.map((r) => {
+          robot_no = robot_no + 1
+          return sql<RobotRow>`SELECT * FROM ${insertUpdateRobot(r, team_id, robot_no)}`.execute(db)
+        })
+      )
+      // @ts-ignore
+      robots = robots_response.map((rr) => rr.rows[0].fn_insert_update_robot)
+    } catch (e) {
+      throw 'Something went wrong while creating robots'
+    }
+
+    // connect teams and participants
+    const leader_id = participants[0]
+    try {
+      const res = await Promise.all(
+        participants.map((p_id) => {
+          const role = p_id === leader_id ? 'leader' : 'participant'
+          return sql<TeamsParticipantsRow>`SELECT * FROM ${connectTeamParticipant(p_id, team_id, role)}`.execute(db)
+        })
+      )
+    } catch {
+      throw 'Something went wrong while linking teams and participants'
+    }
     db.destroy()
   } catch (e) {
-    console.log(e)
     db.destroy()
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
-      message: 'Something went wrong while adding to database'
+      message: e as string
     })
   }
 })
