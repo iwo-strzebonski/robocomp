@@ -133,7 +133,7 @@ export default defineEventHandler(async (event) => {
     // connect teams and participants
     const leaderId = participants[0]
     try {
-      const res = await Promise.all(
+      await Promise.all(
         participants.map((p_id) => {
           const role = p_id === leaderId ? 'leader' : 'participant'
           return sql<{
