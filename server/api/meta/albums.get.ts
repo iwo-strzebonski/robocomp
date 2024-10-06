@@ -50,7 +50,7 @@ export default defineEventHandler(async (): Promise<AlbumResponse | H3Error> => 
         data: v.photos.data.map((img) => ({
           ...img,
           webp_images: img.webp_images
-            .filter((i) => (i.width > i.height ? i.width : i.height) < GALLERY_IMG_SIZE_PX)
+            .filter((i) => (i.width > i.height ? i.width : i.height) > GALLERY_IMG_SIZE_PX)
             .sort((a, b) => b.width - a.width)
         }))
       }
