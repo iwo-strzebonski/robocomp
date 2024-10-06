@@ -46,7 +46,7 @@ const twitterProperties = [
   {
     hid: 'twitter:card',
     name: 'twitter:card',
-    content: ''
+    content: 'https://robocomp.info/icon.png'
   },
   {
     hid: 'twitter:title',
@@ -62,7 +62,7 @@ const twitterProperties = [
   {
     hid: 'twitter:image',
     name: 'twitter:image',
-    content: ''
+    content: 'https://robocomp.info/icon.png'
   },
   {
     hid: 'twitter:site',
@@ -207,6 +207,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxtjs/robots',
     '@nuxt/content',
     '@nuxtjs/color-mode',
     '@pinia/nuxt',

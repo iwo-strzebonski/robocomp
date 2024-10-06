@@ -2478,7 +2478,7 @@
     "@nuxt/schema" "^3.13.1"
     execa "^7.2.0"
 
-"@nuxt/devtools-kit@^1.4.1":
+"@nuxt/devtools-kit@^1.4.1", "@nuxt/devtools-kit@^1.4.2":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@nuxt/devtools-kit/-/devtools-kit-1.5.2.tgz#c558f96872ce443a88727b63e549b4976bd8c5c1"
   integrity sha512-IMbwflL/JLuK1JcM5yWKa+T5JGjwnCACZJw218/8bUTt/uTVgtkMueE+1/p9rhCWxvGQiT3xnCIXKhEg7xP58Q==
@@ -2903,6 +2903,23 @@
     unist-builder "^4.0.0"
     unist-util-visit "^5.0.0"
     unwasm "^0.3.9"
+
+"@nuxtjs/robots@^4.1.7":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/robots/-/robots-4.1.7.tgz#b3621da8fdfec12eaea444e73fde84d7fe8ed682"
+  integrity sha512-1rz2oyBNmpfIzqNG9LfGft+H8Wpp1BMmPyNhkm7BuG/jUXTBFaCh6HDeK6Otx2y53Z9JtCDhiIs/JHj/L4WLPw==
+  dependencies:
+    "@nuxt/devtools-kit" "^1.4.1"
+    "@nuxt/kit" "^3.13.1"
+    consola "^3.2.3"
+    defu "^6.1.4"
+    nuxt-site-config "^2.2.16"
+    nuxt-site-config-kit "^2.2.16"
+    pathe "^1.1.2"
+    pkg-types "^1.2.0"
+    sirv "^2.0.4"
+    std-env "^3.7.0"
+    ufo "^1.5.4"
 
 "@nuxtjs/tailwindcss@^6.10.0", "@nuxtjs/tailwindcss@^6.12.1":
   version "6.12.1"
@@ -12039,6 +12056,33 @@ nuxi@^3.12.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
+nuxt-site-config-kit@2.2.18, nuxt-site-config-kit@^2.2.16:
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/nuxt-site-config-kit/-/nuxt-site-config-kit-2.2.18.tgz#dc65c7885a968b6abdf77ca78ad3c33291ca53ab"
+  integrity sha512-iPtf2X1fvI9m9VV04edSqNGC2EzQ1aLB7F2/AOxYRktCJxHeTdBGifuNPc90EaEIOfWx+gf3lmRd4EppGoAMSA==
+  dependencies:
+    "@nuxt/kit" "^3.13.1"
+    "@nuxt/schema" "^3.13.1"
+    pkg-types "^1.2.0"
+    site-config-stack "2.2.18"
+    std-env "^3.7.0"
+    ufo "^1.5.4"
+
+nuxt-site-config@^2.2.16:
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/nuxt-site-config/-/nuxt-site-config-2.2.18.tgz#4c815a946805cf13271a72da20f82e63689a0f60"
+  integrity sha512-NU39ANP1kvRBzpEWV496y/lf9PKVv3t1VKX3zmQ1POcbzAXU4gm0Mh5NKOaLEcoXj6bQnziFNqjzHX3DAA8Aog==
+  dependencies:
+    "@nuxt/devtools-kit" "^1.4.2"
+    "@nuxt/kit" "^3.13.1"
+    "@nuxt/schema" "^3.13.1"
+    nuxt-site-config-kit "2.2.18"
+    pathe "^1.1.2"
+    pkg-types "^1.2.0"
+    sirv "^2.0.4"
+    site-config-stack "2.2.18"
+    ufo "^1.5.4"
+
 nuxt@^3.12.4:
   version "3.12.4"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.12.4.tgz#d1c2aa26aa90aefb8ac08bd9a5648851e4db91af"
@@ -13972,6 +14016,13 @@ sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
+site-config-stack@2.2.18:
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/site-config-stack/-/site-config-stack-2.2.18.tgz#1dbaf40e9d5e80ca3be575b5dd532a091ee71602"
+  integrity sha512-kwyuCwYZBJikuLN3IB15cGT7SHQQxAitLaDs1b6eNZbb+tBHubVUhj0pnFZnZZi4+5eNCO+3HiZxaU3qpFxP2A==
+  dependencies:
+    ufo "^1.5.4"
+
 sitemap@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-8.0.0.tgz#eb6ea48f95787cd680b83683c555d6f6b5a903fd"
@@ -14229,16 +14280,7 @@ string-length@^5.0.1:
     char-regex "^2.0.0"
     strip-ansi "^7.0.1"
 
-"string-width-cjs@npm:string-width@^4.2.0":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
-string-width@4.2.3, "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3, string-width@^5.1.2, string-width@^7.0.0:
+"string-width-cjs@npm:string-width@^4.2.0", string-width@4.2.3, "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3, string-width@^5.1.2, string-width@^7.0.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -14320,14 +14362,7 @@ stringify-object@^3.3.0:
     is-obj "^1.0.1"
     is-regexp "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -16165,16 +16200,7 @@ workbox-window@7.0.0, workbox-window@^7.0.0:
     "@types/trusted-types" "^2.0.2"
     workbox-core "7.0.0"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@7.0.0, wrap-ansi@^7.0.0, wrap-ansi@^8.1.0, wrap-ansi@^9.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@7.0.0, wrap-ansi@^7.0.0, wrap-ansi@^8.1.0, wrap-ansi@^9.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

@@ -5,6 +5,10 @@ import NotFound from '~/components/slots/not-found.vue'
 definePageMeta({
   layout: 'index-page'
 })
+
+useHead({
+  title: 'Festiwal Robotyki ROBOCOMP'
+})
 </script>
 
 <template>
