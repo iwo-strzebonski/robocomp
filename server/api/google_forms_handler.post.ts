@@ -19,8 +19,8 @@ function insertUpdateParticipant(participant: Participant) {
   return sql<ParticipantTable>`robocomp.fn_insert_update_participant(${sql.lit(participant.first_name)},${sql.lit(participant.last_name)},${sql.lit(participant.email)},${sql.lit(participant.phone)},${sql.lit(participant.street_address)},${sql.lit(participant.admin_level_2)},${sql.lit(participant.postal_code)},${sql.lit(participant.country)})`
 }
 //the robot numer must be unique
-function insertUpdateRobot(robot: Robot, team_id: number, robot_no: number) {
-  return sql<RobotTable>`robocomp.fn_insert_update_robot(${sql.lit(robot_no)},${sql.lit(robot.name)},2024::smallint,${sql.lit(team_id)},${sql.lit(robot.competition)})`
+function insertUpdateRobot(robot: Robot, team_id: number) {
+  return sql<RobotTable>`robocomp.fn_insert_update_robot(robocomp.fn_get_next_robot_no(),${sql.lit(robot.name)},2024::smallint,${sql.lit(team_id)},${sql.lit(robot.competition)})`
 }
 
 function connectTeamParticipant(participant_id: number, team_id: number, role: string) {
@@ -79,20 +79,17 @@ export default defineEventHandler(async (event) => {
       )
       // @ts-ignore
       participants = participants_response.map((pr) => pr.rows[0].fn_insert_update_participant)
-    } catch {
+    } catch (e) {
+      console.log(e)
       throw 'Something went wrong while creating participants'
     }
 
     // add robots
     let robots = []
-    const robot_no_res = await sql`SELECT * FROM ${getNextRobotNo()}`.execute(db)
-    // @ts-ignore
-    let robot_no = robot_no_res.rows[0].fn_get_next_robot_no - 1
     try {
       const robots_response = await Promise.all(
         body.robots.map((r) => {
-          robot_no = robot_no + 1
-          return sql<RobotRow>`SELECT * FROM ${insertUpdateRobot(r, team_id, robot_no)}`.execute(db)
+          return sql<RobotRow>`SELECT * FROM ${insertUpdateRobot(r, team_id)}`.execute(db)
         })
       )
       // @ts-ignore
