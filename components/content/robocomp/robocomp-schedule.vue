@@ -7,7 +7,7 @@ import prepareDataForSchedule from '~/helpers/prepareDataForSchedule'
 
 import type { ScheduleResponse } from '~/server/api/schedule/index.get'
 
-const key = ref(Math.random())
+const key = ref((Math.random() * 10).toString())
 
 const $props = defineProps<{
   scheduleName: 'robots' | 'events'
@@ -132,7 +132,7 @@ useLazyAsyncData(`${$props.scheduleName}-schedule`, async () => {
   scalesConfig.value.y.max = data.eventEndDate
   chartData.value.datasets = data.datasets
 
-  key.value = Math.random()
+  key.value = (Math.random() * 10).toString()
 })
 
 onMounted(() => {

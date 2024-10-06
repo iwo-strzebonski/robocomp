@@ -172,14 +172,13 @@ export default defineNuxtConfig({
   },
 
   css: [
+    '@/assets/css/main.css',
+    '@/assets/css/tailwind.css',
+    '@/assets/css/flowbite.css',
     '@/assets/css/content.css',
     '@/assets/css/diana.css',
-    '@/assets/css/flowbite.css',
-    '@/assets/css/tailwind.css',
-    '@/assets/css/main.css',
-    '@/assets/css/markdown.css',
-    '@/assets/css/treeview.css',
-    'vue3-treeview/dist/style.css'
+    'vue3-treeview/dist/style.css',
+    '@/assets/css/treeview.css'
   ],
 
   components: true,

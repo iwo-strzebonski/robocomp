@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FwbPagination } from 'flowbite-vue'
 
-import type { Article } from '@/types'
+import type { Article } from '~/types'
 
 const $props = defineProps({
   parent: {

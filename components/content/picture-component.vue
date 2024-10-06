@@ -1,24 +1,9 @@
 <script setup lang="ts">
-enum SizeName {
-  XS = 'xs',
-  SM = 'sm',
-  MD = 'md',
-  LG = 'lg',
-  XL = 'xl',
-  XXL = 'xxl'
-}
-
-enum ImageSize {
-  'xs' = '320px',
-  'sm' = '640px',
-  'md' = '768px',
-  'lg' = '1024px',
-  'xl' = '1280px',
-  'xxl' = '1536px'
-}
+import { SizeName, ImageSize } from '~/helpers/getSizeNameFromSize'
 
 interface TagProps {
   alt: string
+  aspectRatio?: string
 }
 
 interface PictureTagProps extends TagProps {
@@ -75,7 +60,12 @@ onMounted(() => {
 
 <template>
   <div>
-    <picture v-if="'images' in $props && $props.images" @click="fullScreen = true">
+    <picture
+      v-if="'images' in $props && $props.images"
+      :style="`aspect-ratio: ${$props.aspectRatio || 'auto'}`"
+      class="!m-0 cursor-pointer"
+      @click="fullScreen = true"
+    >
       <source
         v-for="img in $props.images"
         :key="img.src"
@@ -83,22 +73,23 @@ onMounted(() => {
         :media="`(max-width: ${ImageSize[img.size]})`"
       />
 
-      <nuxt-img :src="$props.images[$props.images.length - 1].src" :alt="$props.alt" />
+      <nuxt-img
+        :src="$props.images[$props.images.length - 1].src"
+        :alt="$props.alt"
+        class="object-cover w-full h-full"
+      />
     </picture>
 
     <nuxt-img
       v-else-if="'image' in $props && $props.image"
       :src="$props.image.src"
       :alt="$props.alt"
-      :style="{ width: ImageSize[$props.image.size] }"
+      :style="{ width: ImageSize[$props.image.size], aspectRatio: $props.aspectRatio || 'auto' }"
       @click="fullScreen = true"
     />
 
     <div ref="backdropRef" :class="backdropClassName" @click="fullScreen = false">
-      <picture
-        v-if="'images' in $props && $props.images"
-        class="max-w-[calc(100vw_-_2rem)] max-h-[calc(100vh_-_2rem) md:w-2/3"
-      >
+      <picture v-if="'images' in $props && $props.images" class="md:w-2/3 !flex items-center justify-center">
         <source
           v-for="img in $props.images"
           :key="img.src"
@@ -106,12 +97,17 @@ onMounted(() => {
           :media="`(max-width: ${ImageSize[img.size]})`"
         />
 
-        <nuxt-img :src="$props.images[$props.images.length - 1].src" :alt="$props.alt" />
+        <nuxt-img
+          :src="$props.images[$props.images.length - 1].src"
+          :alt="$props.alt"
+          style="max-width: calc(100vmin - 2rem); max-height: calc(100vmin - 2rem)"
+        />
       </picture>
 
       <nuxt-img
         v-else-if="'image' in $props && $props.image"
-        class="max-w-[calc(100vw_-_2rem)] max-h-[calc(100vh_-_2rem) md:w-2/3"
+        style="max-width: calc(100vmin - 2rem); max-height: calc(100vmin - 2rem)"
+        class="md:w-2/3"
         :src="$props.image.src"
         :alt="$props.alt"
       />

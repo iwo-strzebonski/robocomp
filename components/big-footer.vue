@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col items-center bg-neutral-300 p-8 gap-8 z-0">
-    <div class="bg-black text-white uppercase text-2xl px-6 py-4 tracking-[.3rem] before-box before:bg-red-400">
-      Sponsorzy i partnerzy
-    </div>
+    <div class="primary-header mt-6">Sponsorzy i partnerzy</div>
 
     <span class="inline-flex gap-4">
       <NuxtLink to="http://www.integra.agh.edu.pl/" target="_blank" rel="noopener noreferrer">

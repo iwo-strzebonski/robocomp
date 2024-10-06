@@ -2,9 +2,9 @@
 // @ts-expect-error - Vue 3 Treeview has no types
 import Tree from 'vue3-treeview'
 
-import { flatToCtoTree } from '@/helpers/nestedTocToFlat'
+import { flatToCtoTree } from '~/helpers/nestedTocToFlat'
 
-import type { ToCFlatNode } from '@/types'
+import type { ToCFlatNode } from '~/types'
 
 interface TableOfContentsData {
   nodes: { [key: string]: ToCFlatNode }
