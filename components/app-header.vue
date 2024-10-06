@@ -7,7 +7,14 @@
         </NuxtLink>
 
         <div class="flex">
-          <NuxtLink v-for="link in headerLinks" :key="link.name" class="header-item text-white" :to="link.link">
+          <NuxtLink
+            v-for="link in headerLinks"
+            :key="link.name"
+            class="header-item text-white"
+            :to="link.link"
+            :target="link.external ? '_blank' : '_self'"
+            @click="dropdownVisible = false"
+          >
             {{ link.name }}
           </NuxtLink>
 
@@ -21,12 +28,14 @@
           </div>
 
           <div v-show="dropdownVisible" class="hidden md:relative md:block z-40">
-            <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left">
+            <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left shadow">
               <NuxtLink
                 v-for="link in hamburgerLinks"
                 :key="link.name"
                 class="p-8 text-black hover:bg-neutral-200"
                 :to="link.link"
+                :target="link.external ? '_blank' : '_self'"
+                @click="dropdownVisible = false"
               >
                 {{ link.name }}
               </NuxtLink>
@@ -51,12 +60,13 @@
       </div>
 
       <div v-show="dropdownVisible" class="w-full absolute slide-in-up md:hidden z-40">
-        <div class="flex flex-col text-center bg-white rounded-sm">
+        <div class="flex flex-col text-center bg-white shadow">
           <NuxtLink
             v-for="link in filteredLinks"
             :key="link.name"
-            class="p-8 text-black hover:bg-neutral-200 cursor-pointer"
             :to="link.link"
+            :target="link.external ? '_blank' : '_self'"
+            class="p-8 text-black hover:bg-neutral-200 cursor-pointer"
             @click="dropdownVisible = false"
           >
             {{ link.name }}
@@ -72,7 +82,7 @@ const links = [
   { name: 'Harmonogram', link: '/blog/agenda' },
   { name: 'Regulaminy', link: '/blog/regulations' },
   // { name: 'Wyniki', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
-  // { name: 'Rejestracja', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  { name: 'Rejestracja', link: 'http://registration.robocomp.info', external: true },
   // { name: 'Głosowanie', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   // { name: 'Kontakt', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   // { name: 'O\xA0nas', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
@@ -94,7 +104,7 @@ const filteredLinks = computed(() => {
 const hamburgerIndex = 3
 
 const headerLinks = computed(() => filteredLinks.value.slice(0, hamburgerIndex))
-const hamburgerLinks = computed(() => filteredLinks.value.slice(hamburgerIndex, -1))
+const hamburgerLinks = computed(() => filteredLinks.value.slice(hamburgerIndex))
 const dropdownVisible = ref(false)
 </script>
 
