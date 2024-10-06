@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-screen shrink-0 overflow-hidden bg-black z-0">
     <div id="bckg-dots" class="absolute w-full h-full opacity-10 -z-10"></div>
-    <div id="bckg-smear" class="absolute w-full h-full -z-10"></div>
+    <div id="bckg-smear" class="absolute w-full h-full -z-10 bg-cover"></div>
 
     <AppHeader />
 
