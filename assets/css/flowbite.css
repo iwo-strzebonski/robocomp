@@ -2,10 +2,6 @@
   @apply !text-zinc-400;
 }
 
-.flowbite div.dark\:bg-gray-700 {
-  @apply !bg-zinc-700;
-}
-
 .flowbite input,
 .flowbite select {
   @apply !border !border-zinc-950;

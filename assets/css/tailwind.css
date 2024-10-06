@@ -16,18 +16,14 @@ body {
   @apply font-display;
   @apply transition-colors;
   @apply ease-in-out;
-  /* @apply delay-150; */
   @apply duration-300;
   @apply motion-reduce:transition-none;
   @apply motion-reduce:hover:transform-none;
-  text-rendering: optimizeLegibility;
+
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-*,
-*::before,
-*::after {
+  
   @apply transition-all;
   @apply ease-in-out;
   @apply duration-300;
@@ -63,12 +59,14 @@ h1 {
 
   .header-shadow::before {
     content: '';
+
     @apply absolute w-full h-full -top-3 -left-3.5 -z-10;
     @apply bg-cover;
   }
 
   .header-shadow-after::after {
     content: '';
+
     @apply absolute w-full h-full top-0 right-0 z-10;
     @apply bg-cover;
   }

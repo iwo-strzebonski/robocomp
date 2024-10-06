@@ -1,11 +1,8 @@
 extends:
-  - stylelint-config-standard
+  - stylelint-config-recommended
+  - stylelint-config-standard-vue
 plugins:
   - stylelint-prettier
-overrides:
-  - files:
-    - '*.vue'
-    customSyntax: postcss-lit
 rules:
   at-rule-no-unknown:
     - true
