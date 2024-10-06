@@ -25,7 +25,9 @@ const { data: galleryData, status } = useLazyFetch<AlbumResponse | H3Error>('/ap
         </fwb-accordion-header>
 
         <fwb-accordion-content class="fwb-accordion-content">
-          <NuxtLink :to="yearData.link" class="!block underline text-lg mb-4"> Galeria na Facebooku </NuxtLink>
+          <NuxtLink :to="yearData.link" class="!block underline text-lg mb-4" target="_blank">
+            Galeria na Facebooku
+          </NuxtLink>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <PictureComponent
