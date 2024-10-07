@@ -1,12 +1,14 @@
 import { createKysely } from '@vercel/postgres-kysely'
 import { createError } from 'h3'
 import { sql } from 'kysely'
+
+import { isFormsResponse, type FormsResponse, type Participant, type Robot } from '~/types/Forms_response'
+
 import type { Database } from '~/types/db/Database'
 import type ParticipantTable from '~/types/db/Participants'
 import type RobotTable from '~/types/db/Robots'
 import type TeamTable from '~/types/db/Teams'
 import type TeamsParticipantsTable from '~/types/db/TeamsParticipants'
-import { isFormsResponse, type FormsResponse, type Participant, type Robot } from '~/types/Forms_response'
 
 function insertUpdateTeam(team_name: string, team_id: number | null = null) {
   if (team_id) {
@@ -21,7 +23,7 @@ function insertUpdateParticipant(participant: Participant, participant_id: numbe
   }
   return sql<ParticipantTable>`robocomp.fn_insert_update_participant(${sql.lit(participant.first_name)},${sql.lit(participant.last_name)},${sql.lit(participant.email)},${sql.lit(participant.phone)},${sql.lit(participant.street_address)},${sql.lit(participant.admin_level_2)},${sql.lit(participant.postal_code)},${sql.lit(participant.country)})`
 }
-//the robot numer must be unique
+// the robot numer must be unique
 function insertUpdateRobot(robot: Robot, team_id: number) {
   return sql<RobotTable>`robocomp.fn_insert_update_robot(robocomp.fn_get_next_robot_no(),${sql.lit(robot.name)},${sql.lit(new Date().getFullYear())}::smallint,${sql.lit(team_id)},${sql.lit(robot.competition)})`
 }
@@ -45,8 +47,12 @@ function connectTeamParticipant(participant_id: number, team_id: number, role: s
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody(event)
   if (!isFormsResponse(rawBody)) {
-    throw 'Invalid form data'
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid form data'
+    })
   }
+
   const body = rawBody as FormsResponse
   const db = createKysely<Database>()
   const emails = body.participants.map((p) => p.email)
@@ -67,15 +73,20 @@ export default defineEventHandler(async (event) => {
 
     const existingLeader = existingParticipants.filter((ep) => ep.email === leaderEmail)
     let existingTeamId = null
+
     if (existingLeader.length === 1 && existingLeader[0].role === 'leader') {
       existingTeamId = existingLeader[0].tid
       editReq = true
     } else if (existingParticipants.length !== 0) {
-      throw 'Some participants are already registered to a different team'
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Some participants are already registered to a different team'
+      })
     }
 
     // unlink all participants, delete linked robots
     let deletedLinks: { participants_id: number }[] = []
+
     if (editReq) {
       try {
         deletedLinks = await db
@@ -87,7 +98,10 @@ export default defineEventHandler(async (event) => {
         await db.deleteFrom('robocomp.participants').where('id', 'in', deletedIds).execute()
         await db.deleteFrom('robocomp.robots').where('team', '=', existingTeamId).execute()
       } catch {
-        throw 'Something went wrong while unlinking robots and participants'
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'Something went wrong while unlinking robots and participants'
+        })
       }
     }
 
@@ -96,57 +110,81 @@ export default defineEventHandler(async (event) => {
       fn_insert_update_team: number
     }>`SELECT * FROM ${insertUpdateTeam(body.team_name, existingTeamId)}`.execute(db)
     if (!team || team.rows.length === 0) {
-      throw 'Something went wrong while creating team'
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Something went wrong while creating team'
+      })
     }
-    const team_id = team.rows[0].fn_insert_update_team
+
+    const teamId = team.rows[0].fn_insert_update_team
+
+    console.debug('Added team: ', teamId)
 
     // add participants
     let participants = []
+
     try {
-      const participants_response = await Promise.all(
+      const participantsResponse = await Promise.all(
         body.participants.map((p) =>
           sql<{
             fn_insert_update_participant: number
           }>`SELECT * FROM ${insertUpdateParticipant(p)}`.execute(db)
         )
       )
-      participants = participants_response.map((pr) => pr.rows[0].fn_insert_update_participant)
-    } catch (e) {
-      throw 'Something went wrong while creating participants'
+
+      participants = participantsResponse.map((pr) => pr.rows[0].fn_insert_update_participant)
+
+      console.debug('Added participants: ', participants)
+    } catch {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Something went wrong while creating participants'
+      })
     }
 
     // add robots
     let robots = []
     try {
-      const robots_response = await Promise.all(
+      const robotsResponse = await Promise.all(
         body.robots.map((r) => {
           return sql<{
             fn_insert_update_robot: number
-          }>`SELECT * FROM ${insertUpdateRobot(r, team_id)}`.execute(db)
+          }>`SELECT * FROM ${insertUpdateRobot(r, teamId)}`.execute(db)
         })
       )
-      robots = robots_response.map((rr) => rr.rows[0].fn_insert_update_robot)
-    } catch (e) {
-      throw 'Something went wrong while creating robots'
+
+      robots = robotsResponse.map((rr) => rr.rows[0].fn_insert_update_robot)
+
+      console.debug('Added robots: ', robots)
+    } catch {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Something went wrong while creating robots'
+      })
     }
 
     // connect teams and participants
     const leaderId = participants[0]
     try {
       await Promise.all(
-        participants.map((p_id) => {
-          const role = p_id === leaderId ? 'leader' : 'participant'
+        participants.map((pId) => {
+          const role = pId === leaderId ? 'leader' : 'participant'
           return sql<{
             fn_connect_participant_and_team: number
-          }>`SELECT * FROM ${connectTeamParticipant(p_id, team_id, role)}`.execute(db)
+          }>`SELECT * FROM ${connectTeamParticipant(pId, teamId, role)}`.execute(db)
         })
       )
     } catch {
-      throw 'Something went wrong while linking teams and participants'
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Something went wrong while connecting participants to team'
+      })
     }
+
     db.destroy()
   } catch (e) {
     db.destroy()
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
