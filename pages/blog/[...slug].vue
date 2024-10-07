@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import EmptyDoc from '~/components/slots/empty-doc.vue'
 import NotFound from '~/components/slots/not-found.vue'
+
+const $route = useRoute()
+
+const shouldCrawl = computed(() => {
+  return $route.fullPath !== '/blog'
+})
+
+useHead({
+  meta: [
+    {
+      property: 'robots',
+      content: shouldCrawl.value ? 'index, follow' : 'noindex, nofollow'
+    }
+  ]
+})
 </script>
 
 <template>
