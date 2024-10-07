@@ -3,7 +3,7 @@
     <div class="hidden md:block">
       <div class="flex items-center justify-between">
         <NuxtLink to="/">
-          <NuxtImg src="/img/landing-page/logoHalfNoNeon.png" height="128px" class="ml-4 mb-2" />
+          <NuxtImg src="/img/landing-page/logoHalfNoNeon.webp" height="128px" class="ml-4 mb-2" alt="ROBOCOMP Logo" />
         </NuxtLink>
 
         <div class="flex">
@@ -48,7 +48,12 @@
 
     <div class="block md:hidden">
       <div class="flex items-center justify-between">
-        <NuxtImg src="/img/landing-page/logoHalfNoNeon.png" height="128px" class="ml-4 my-2 cursor-pointer" />
+        <NuxtImg
+          src="/img/landing-page/logoHalfNoNeon.webp"
+          height="128px"
+          class="ml-4 my-2 cursor-pointer"
+          alt="ROBOCOMP robot arm"
+        />
 
         <div class="flex">
           <div class="header-item cursor-pointer" @click="dropdownVisible = !dropdownVisible">

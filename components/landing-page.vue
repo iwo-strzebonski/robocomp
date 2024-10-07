@@ -7,8 +7,7 @@
 
     <div class="flex justify-around h-full px-4 pt-4">
       <div class="w-full md:w-1/2 flex flex-col">
-        <NuxtImg src="/img/landing-page/landing-logo.png" class="w-full" />
-        <!-- TODO - zmienić grafikę bo jest  hala krakowi a nie agh-->
+        <NuxtImg src="/img/landing-page/landing-logo.webp" class="w-full" alt="Landing logo" />
 
         <span class="px-3 py-10 whitespace-pre-wrap text-ellipsis text-white"
           >Festiwal robotyki ROBOCOMP to inicjatywa Koła Naukowego Integra. Główną atrakcją będą zawody robotów oraz
@@ -24,17 +23,17 @@
         </NuxtLink>
       </div>
 
-      <NuxtImg src="/img/landing-page/arm-robocomp.png" class="hidden md:block" />
+      <NuxtImg src="/img/landing-page/arm-robocomp.webp" class="hidden md:block" alt="ROBOCOMP robot arm" />
     </div>
   </div>
 </template>
 
 <style>
 #bckg-dots {
-  background: url('/img/landing-page/dot.png') gray 0% 0% / 50px 50px repeat;
+  background: url('/img/landing-page/dot.webp') gray 0% 0% / 50px 50px repeat;
 }
 
 #bckg-smear {
-  @apply bg-[url('/img/landing-page/bckg-smear.png')] bg-cover;
+  @apply bg-[url('/img/landing-page/bckg-smear.svg')] bg-cover;
 }
 </style>
