@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /blog
+Allow: /blog/*
+Sitemap: https://robocomp.info/sitemap.xml
