@@ -165,11 +165,11 @@ export default defineNuxtConfig({
     }
   },
 
-  nitro: {
+  /* nitro: {
     prerender: {
       routes: ['/sitemap.xml']
     }
-  },
+  }, */
 
   css: [
     '@/assets/css/main.css',
