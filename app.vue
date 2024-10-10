@@ -4,6 +4,17 @@ import { initFlowbite } from 'flowbite'
 
 const { $pwa } = useNuxtApp()
 
+const $route = useRoute()
+  
+useHead(() => {
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://www.robocomp.info' + $route.path
+    }
+  ]
+})
+  
 onMounted(async () => {
   if (!$pwa) {
     return
