@@ -15,6 +15,10 @@ interface IPageMeta {
 }
 
 export default defineEventHandler(async (event) => {
+  setResponseHeaders(event, {
+    'content-type': 'application/json',
+  })
+
   const docs = await serverQueryContent(event).find()
   const sitemap = await getSitemapStream(event)
   const sitemapString = (await streamToPromise(sitemap)).toString()
