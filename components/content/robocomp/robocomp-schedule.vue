@@ -9,6 +9,8 @@ import type { ScheduleResponse } from '~/server/api/schedule/index.get'
 
 const key = ref((Math.random() * 10).toString())
 
+const interval = ref(null as null | number)
+
 const $props = defineProps<{
   scheduleName: 'robots' | 'events'
 }>()
@@ -145,9 +147,19 @@ onMounted(() => {
     return
   }
 
+  if (interval.value) {
+    clearInterval(interval.value)
+  }
+
   setInterval(() => {
     refreshNuxtData(`${$props.scheduleName}-schedule`)
   }, 60 * 1000)
+})
+
+onUnmounted(() => {
+  if (interval.value) {
+    clearInterval(interval.value)
+  }
 })
 </script>
 
