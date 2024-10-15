@@ -46,7 +46,11 @@ function connectTeamParticipant(participant_id: number, team_id: number, role: s
 */
 export default defineEventHandler(async (event) => {
   const rawBody = await readBody(event)
+
   if (!isFormsResponse(rawBody)) {
+    console.error('Invalid form data')
+    console.error(rawBody)
+
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid form data'
@@ -78,6 +82,8 @@ export default defineEventHandler(async (event) => {
       existingTeamId = existingLeader[0].tid
       editReq = true
     } else if (existingParticipants.length !== 0) {
+      console.error('Some participants are already registered to a different team')
+
       throw createError({
         statusCode: 400,
         statusMessage: 'Some participants are already registered to a different team'
@@ -97,7 +103,9 @@ export default defineEventHandler(async (event) => {
         const deletedIds = deletedLinks.map((l) => l.participants_id)
         await db.deleteFrom('robocomp.participants').where('id', 'in', deletedIds).execute()
         await db.deleteFrom('robocomp.robots').where('team', '=', existingTeamId).execute()
-      } catch {
+      } catch (e) {
+        console.error(e)
+
         throw createError({
           statusCode: 400,
           statusMessage: 'Something went wrong while unlinking robots and participants'
@@ -110,6 +118,8 @@ export default defineEventHandler(async (event) => {
       fn_insert_update_team: number
     }>`SELECT * FROM ${insertUpdateTeam(body.team_name, existingTeamId)}`.execute(db)
     if (!team || team.rows.length === 0) {
+      console.error('Failed to create team')
+
       throw createError({
         statusCode: 400,
         statusMessage: 'Something went wrong while creating team'
@@ -135,7 +145,9 @@ export default defineEventHandler(async (event) => {
       participants = participantsResponse.map((pr) => pr.rows[0].fn_insert_update_participant)
 
       console.debug('Added participants: ', participants)
-    } catch {
+    } catch (e) {
+      console.error(e)
+
       throw createError({
         statusCode: 400,
         statusMessage: 'Something went wrong while creating participants'
@@ -144,6 +156,7 @@ export default defineEventHandler(async (event) => {
 
     // add robots
     let robots = []
+
     try {
       const robotsResponse = await Promise.all(
         body.robots.map((r) => {
@@ -156,7 +169,9 @@ export default defineEventHandler(async (event) => {
       robots = robotsResponse.map((rr) => rr.rows[0].fn_insert_update_robot)
 
       console.debug('Added robots: ', robots)
-    } catch {
+    } catch (e) {
+      console.error(e)
+
       throw createError({
         statusCode: 400,
         statusMessage: 'Something went wrong while creating robots'
@@ -165,6 +180,7 @@ export default defineEventHandler(async (event) => {
 
     // connect teams and participants
     const leaderId = participants[0]
+
     try {
       await Promise.all(
         participants.map((pId) => {
@@ -174,21 +190,26 @@ export default defineEventHandler(async (event) => {
           }>`SELECT * FROM ${connectTeamParticipant(pId, teamId, role)}`.execute(db)
         })
       )
-    } catch {
+    } catch (e) {
+      console.error(e)
+
       throw createError({
         statusCode: 400,
         statusMessage: 'Something went wrong while connecting participants to team'
       })
     }
-
-    db.destroy()
   } catch (e) {
     db.destroy()
 
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
-      message: e as string
+      message: (e as Error).message,
+      stack: (e as Error).stack,
+      cause: (e as Error).cause,
+      name: (e as Error).name
     })
+  } finally {
+    db.destroy()
   }
 })
