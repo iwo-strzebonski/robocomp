@@ -1,5 +1,8 @@
 public/sw.js
+public/robots.txt
+public/_robots.txt
 .DS_Store
+*/**/.DS_Store
 
 # Logs
 logs
