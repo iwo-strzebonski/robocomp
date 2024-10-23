@@ -6,7 +6,7 @@
     <AppHeader />
 
     <div class="flex justify-around h-full px-4 pt-4">
-      <div class="w-full md:w-1/2 flex flex-col">
+      <div class="w-full md:w-1/2 flex flex-col slide-right">
         <NuxtImg src="/img/landing-page/landing-logo.webp" class="w-full" alt="Landing logo" />
 
         <span class="px-3 py-10 whitespace-pre-wrap text-ellipsis text-white"
@@ -23,7 +23,7 @@
         </NuxtLink>
       </div>
 
-      <NuxtImg src="/img/landing-page/arm-robocomp.webp" class="hidden md:block" alt="ROBOCOMP robot arm" />
+      <NuxtImg src="/img/landing-page/arm-robocomp.webp" class="hidden md:block slide-up" alt="ROBOCOMP robot arm" />
     </div>
   </div>
 </template>
@@ -35,5 +35,40 @@
 
 #bckg-smear {
   @apply bg-[url('/img/landing-page/bckg-smear.svg')] bg-cover;
+}
+
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: slideUp 1.2s ease forwards;
+}
+
+.slide-right {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: slideRight 1.2s ease forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }
 </style>
