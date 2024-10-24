@@ -21,6 +21,14 @@ a {
 }
 */
 
+.index-page {
+  @apply bg-white z-10;
+}
+
+.big-footer {
+  @apply bg-neutral-300;
+}
+
 .diana-page.page-enter-active .diana-page-content,
 .diana-page.page-leave-active .diana-page-content,
 .content-page.page-enter-active main,

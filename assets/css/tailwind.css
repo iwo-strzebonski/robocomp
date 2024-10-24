@@ -72,15 +72,17 @@ h1 {
   }
 
   .partner-logo {
-    @apply w-[200px] aspect-square;
+    @apply aspect-square;
+    @apply w-48;
     @apply p-4;
     @apply inline-flex justify-center;
-    @apply bg-white bg-contain bg-no-repeat bg-center bg-origin-content;
+    @apply bg-white;
+    @apply bg-contain bg-no-repeat bg-center bg-origin-content;
   }
 
   .small-logo .partner-logo {
-    @apply w-[100px]; 
-    @apply w-[100px] p-2; 
+    @apply w-32; 
+    @apply p-2; 
   }
 }
 
@@ -90,10 +92,6 @@ h1 {
   @apply before:bg-sky-400;
   @apply after:bg-[url('/img/header-gradient.svg')];
   @apply tracking-wide;
-}
-
-.partner-page.markdown-content .big-footer {
-  @apply bg-transparent;
 }
 
 .partner-page.markdown-content .primary-header {
