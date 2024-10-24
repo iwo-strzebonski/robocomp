@@ -1,19 +1,11 @@
 <script setup lang="ts">
 import EmptyDoc from '~/components/slots/empty-doc.vue'
 import NotFound from '~/components/slots/not-found.vue'
-
-definePageMeta({
-  layout: 'index-page'
-})
-
-useHead({
-  title: 'Festiwal Robotyki ROBOCOMP'
-})
 </script>
 
 <template>
-  <div class="index-page content-page markdown-content flex flex-col flex-1">
-    <main class="container mx-auto my-8 px-4 lg:px-0 flex-1">
+  <div class="partner-page content-page markdown-content flex flex-col flex-1">
+    <main class="container flex-1 mx-auto my-8 px-4 lg:px-0">
       <content-doc>
         <template #not-found>
           <not-found />
@@ -25,7 +17,6 @@ useHead({
       </content-doc>
     </main>
 
-    <BigFooter class="mt-auto" logo-size="small" />
-    <AppFooter />
+    <AppFooter class="mt-auto" />
   </div>
 </template>

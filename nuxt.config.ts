@@ -238,5 +238,7 @@ export default defineNuxtConfig({
     META_GRAPH_ENDPOINT: process.env.META_GRAPH_ENDPOINT,
     META_GRAPH_VERSION: process.env.META_GRAPH_VERSION,
     ROBOCOMP_PAGE_ID: process.env.ROBOCOMP_PAGE_ID
-  }
+  },
+
+  compatibilityDate: '2024-10-24'
 })

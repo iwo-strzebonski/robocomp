@@ -70,17 +70,39 @@ h1 {
     @apply absolute w-full h-full top-0 right-0 z-10;
     @apply bg-cover;
   }
+
+  .partner-logo {
+    @apply w-[200px] aspect-square;
+    @apply p-4;
+    @apply inline-flex justify-center;
+    @apply bg-white bg-contain bg-no-repeat bg-center bg-origin-content;
+  }
+
+  .small-logo .partner-logo {
+    @apply w-[100px]; 
+    @apply w-[100px] p-2; 
+  }
 }
 
-.index-page.markdown-content h1 {
+.index-page.markdown-content h1,
+.partner-page.markdown-content .primary-header {
   @apply header-shadow header-shadow-after;
   @apply before:bg-sky-400;
   @apply after:bg-[url('/img/header-gradient.svg')];
   @apply tracking-wide;
 }
 
+.partner-page.markdown-content .big-footer {
+  @apply bg-transparent;
+}
+
+.partner-page.markdown-content .primary-header {
+  @apply !text-lg;
+}
+
 .primary-header,
-.blog-page.markdown-content h1 {
+.blog-page.markdown-content h1,
+.partner-page.markdown-content h1 {
   @apply header-shadow;
   @apply before:bg-red-400;
   @apply self-center;

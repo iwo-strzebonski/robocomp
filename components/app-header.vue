@@ -92,7 +92,8 @@ const links = [
   // { name: 'Głosowanie', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   { name: 'Kontakt', link: '/blog/contact' },
   // { name: 'O\xA0nas', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
-  { name: 'Galeria', link: '/blog/gallery' }
+  { name: 'Galeria', link: '/blog/gallery' },
+  { name: 'Patroni', link: '/partners' }
 ]
 
 const $route = useRoute()

@@ -37,3 +37,7 @@
 .markdown-content .map-container address {
   @apply flex flex-row justify-start md:flex-col text-2xl lg:text-3xl;
 }
+
+.markdown-content.partner-page h2 {
+  @apply mt-4 mb-2;
+}
