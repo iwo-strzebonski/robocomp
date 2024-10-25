@@ -18,7 +18,7 @@ const $props = defineProps<{
 
       <span class="inline-flex gap-8 flex-wrap justify-center">
         <NuxtLink
-          to="https://www.agh.edu.pl/"
+          :to="$props.linkType === 'internal' ? '/blog/about' : 'https://www.agh.edu.pl/'"
           target="_blank"
           rel="noopener noreferrer"
           class="partner-logo"
