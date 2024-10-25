@@ -41,3 +41,16 @@
 .markdown-content.partner-page h2 {
   @apply mt-4 mb-2;
 }
+
+.markdown-content.partner-page .big-footer {
+  @apply bg-white;
+}
+
+.markdown-content h1 br,
+.markdown-content h2 br {
+  @apply block sm:hidden;
+}
+
+.markdown-content.index-page h1 {
+  @apply mx-auto sm:mx-0;
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /blog
+Disallow: /_nuxt
+Disallow: /api
+Disallow: /xillith
+Allow: /blog/*
+Sitemap: https://www.robocomp.info/sitemap.xml

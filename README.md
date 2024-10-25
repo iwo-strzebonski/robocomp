@@ -8,6 +8,13 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 git clone --recurse-submodules https://github.com/kn-integra/robocomp.app
 ```
 
+## Pull updates
+
+```bash
+git pull
+git submodule update --recursive
+```
+
 ## Setup
 
 Make sure to install the dependencies:
