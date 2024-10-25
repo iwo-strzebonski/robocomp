@@ -17,21 +17,31 @@ const $props = defineProps<{
       <div class="primary-header mt-6">Organizatorzy</div>
 
       <span class="inline-flex gap-8 flex-wrap justify-center">
-        <NuxtLink
-          :to="$props.linkType === 'internal' ? '/blog/about' : 'https://www.agh.edu.pl/'"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="partner-logo"
-          :style="`background-image: url('/logo/agh${$props.logoSize === 'small' ? '' : '-text'}.jpg')`"
-        />
+        <span class="flex flex-col items-center">
+          <NuxtLink
+            :to="$props.linkType === 'internal' ? '/blog/about' : 'https://www.agh.edu.pl/'"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="partner-logo"
+            :style="`background-image: url('/logo/agh${$props.logoSize === 'small' ? '' : '-text'}.jpg')`"
+          />
 
-        <NuxtLink
-          to="http://www.integra.agh.edu.pl/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="partner-logo"
-          style="background-image: url('/logo/integra.png')"
-        />
+          <span v-if="$props.logoSize !== 'small'" class="font-bold"></span>
+          <span v-if="$props.logoSize !== 'small'" class="font-bold"></span>
+        </span>
+
+        <span class="flex flex-col items-center">
+          <NuxtLink
+            to="http://www.integra.agh.edu.pl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="partner-logo"
+            style="background-image: url('/logo/integra.png')"
+          />
+
+          <span v-if="$props.logoSize !== 'small'" class="font-bold text-lg">Koło Naukowe</span>
+          <span v-if="$props.logoSize !== 'small'" class="font-bold text-xl">INTEGRA</span>
+        </span>
       </span>
     </div>
 
