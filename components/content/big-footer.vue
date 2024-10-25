@@ -20,7 +20,7 @@ const $props = defineProps<{
         <span class="flex flex-col items-center">
           <NuxtLink
             :to="$props.linkType === 'internal' ? '/blog/about' : 'https://www.agh.edu.pl/'"
-            target="_blank"
+            :target="$props.linkType === 'internal' ? '_self' : '_blank'"
             rel="noopener noreferrer"
             class="partner-logo"
             :style="`background-image: url('/logo/agh${$props.logoSize === 'small' ? '' : '-text'}.jpg')`"
