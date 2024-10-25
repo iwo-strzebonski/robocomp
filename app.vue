@@ -2,9 +2,14 @@
 import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 import { initFlowbite } from 'flowbite'
 
+import { useUserStore } from '~/store/user.store'
+
+const runtimeConfig = useRuntimeConfig()
 const { $pwa } = useNuxtApp()
 
 const $route = useRoute()
+
+const userStore = useUserStore()
 
 useHead(() => ({
   link: [
@@ -42,6 +47,8 @@ onMounted(async () => {
 })
 
 onBeforeMount(() => {
+  userStore.INTEGRA_API_URL = runtimeConfig.public.INTEGRA_API_URL
+
   initFlowbite()
 })
 </script>

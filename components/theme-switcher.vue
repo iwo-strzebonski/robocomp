@@ -25,14 +25,14 @@ export default {
 <template>
   <button
     type="button"
-    class="inline-flex relative gap-x-3 px-1 py-1 border-solid border-2 rounded-3xl border-black dark:border-white"
+    class="inline-flex relative gap-x-3 px-1 py-1 border-solid border-2 rounded-3xl border-black dark:border-white !transition-none [&>*]:!transition-position"
     title="Toggle theme"
     aria-label="Toggle theme"
     @click="toggleTheme"
   >
     <lazy-client-only>
-      <fa-icon icon="fa-solid fa-moon" class="h-4 w-4" />
-      <fa-icon icon="fa-regular fa-sun" class="h-4 w-4" />
+      <fa-icon icon="fa-solid fa-moon" class="h-4 w-4 !transition-none [&>*]:!transition-none" />
+      <fa-icon icon="fa-regular fa-sun" class="h-4 w-4 !transition-none [&>*]:!transition-none" />
       <div
         class="absolute rounded-xl h-5 w-5 top-0.5 left-0.5 dark:left-[calc(100%_-_22px)] duration-300 ease-in-out bg-black dark:bg-white"
       ></div>

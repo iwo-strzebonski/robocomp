@@ -108,3 +108,9 @@ h1 {
   @apply bg-black !text-white;
   @apply uppercase !text-base sm:!text-2xl tracking-[.3rem];
 }
+
+.svg-inline--fa,
+.svg-inline--fa * {
+  @apply !transition-none;
+  @apply !duration-0;
+}

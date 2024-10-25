@@ -63,8 +63,8 @@ export default {
 </script>
 
 <template>
-  <div class="border rounded-lg p-4 shadow-md bg-zinc-800 border-zinc-700">
-    <span class="text-sm text-zinc-500">Spis treści</span>
+  <div class="border rounded-lg p-4 shadow-md bg-neutral-800 border-neutral-700">
+    <span class="text-sm text-neutral-500">Spis treści</span>
 
     <tree :nodes="nodes" :config="config" @node-focus="onNodeClick" />
   </div>

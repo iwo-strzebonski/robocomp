@@ -16,7 +16,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Organizatorzy</div>
 
-      <span class="inline-flex gap-8">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <NuxtLink
           to="https://www.agh.edu.pl/"
           target="_blank"
@@ -38,7 +38,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Złoci Partnerzy</div>
 
-      <span class="inline-flex gap-4">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <span class="flex flex-col items-center">
           <NuxtLink
             :to="$props.linkType === 'internal' ? '/partners/tme' : 'https://www.tme.eu/'"
@@ -56,7 +56,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Srebrni Partnerzy</div>
 
-      <span class="inline-flex gap-4">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <span class="flex flex-col items-center">
           <NuxtLink
             :to="$props.linkType === 'internal' ? '/partners/astar' : 'https://www.astar.pl/'"
@@ -87,7 +87,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Patroni Medialni</div>
 
-      <span class="inline-flex gap-4">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <span class="flex flex-col items-center">
           <NuxtLink
             to="https://www.krakow.pl/"
@@ -105,7 +105,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Patronat Honorowy</div>
 
-      <span class="inline-flex gap-4">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <span class="flex flex-col items-center">
           <NuxtLink
             to="https://www.krakow.pl/3401,obj,14437,patronaty.html"
@@ -124,7 +124,7 @@ const $props = defineProps<{
     <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Opieka Techniczna</div>
 
-      <span class="inline-flex gap-4">
+      <span class="inline-flex gap-8 flex-wrap justify-center">
         <span class="flex flex-col items-center">
           <NuxtLink
             :to="$props.linkType === 'internal' ? '/partners/rainlabs' : 'https://www.rainlabs.pl/'"

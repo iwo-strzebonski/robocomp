@@ -29,6 +29,8 @@ a {
   @apply bg-neutral-300;
 }
 
+.admin-page.page-enter-active .admin-page-content,
+.admin-page.page-leave-active .admin-page-content,
 .diana-page.page-enter-active .diana-page-content,
 .diana-page.page-leave-active .diana-page-content,
 .content-page.page-enter-active main,
@@ -36,6 +38,8 @@ a {
   transition: all 0.2s;
 }
 
+.admin-page.page-enter-from .admin-page-content,
+.admin-page.page-leave-to .admin-page-content,
 .diana-page.page-enter-from .diana-page-content,
 .diana-page.page-leave-to .diana-page-content,
 .content-page.page-enter-from main,
