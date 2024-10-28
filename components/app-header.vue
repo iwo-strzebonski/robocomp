@@ -1,6 +1,7 @@
 <template>
-  <header id="page-header">
-    <div class="hidden md:block">
+  <header id="page-header" class="h-20 w-full">
+    <div class="fixed w-full z-50" :class="{ 'bg-black': !isAtTop }">
+    <div class="hidden md:block w-full">
       <div class="flex items-center justify-between">
         <NuxtLink to="/">
           <NuxtImg src="/img/landing-page/logoHalfNoNeon.webp" height="128px" class="ml-4 mb-2" alt="ROBOCOMP Logo" />
@@ -82,10 +83,13 @@
         </div>
       </transition>
     </div>
+  </div>
   </header>
 </template>
 
 <script lang="ts" setup>
+
+
 const links = [
   { name: 'Harmonogram', link: '/blog/agenda' },
   { name: 'Regulaminy', link: '/blog/regulations' },
@@ -116,6 +120,24 @@ const hamburgerIndex = 3
 const headerLinks = computed(() => filteredLinks.value.slice(0, hamburgerIndex))
 const hamburgerLinks = computed(() => filteredLinks.value.slice(hamburgerIndex))
 const dropdownVisible = ref(false)
+
+
+const isAtTop = ref(true);
+
+const handleScroll = () => {
+  // Check if the page is at the top (scrollY === 0)
+  isAtTop.value = window.scrollY <= 10;
+};
+
+// Add the scroll event listener when the component is mounted
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+// Remove the scroll event listener when the component is unmounted
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style>
@@ -137,4 +159,5 @@ const dropdownVisible = ref(false)
   opacity: 1;
   transform: translateX(0);
 }
+
 </style>
