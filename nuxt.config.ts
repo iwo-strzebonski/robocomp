@@ -196,16 +196,17 @@ export default defineNuxtConfig({
     '@/assets/css/flowbite.css',
     '@/assets/css/content.css',
     '@/assets/css/diana.css',
+    '@/assets/css/treeview.css',
     'vue3-treeview/dist/style.css',
-    '@/assets/css/treeview.css'
+    '@vuepic/vue-datepicker/dist/main.css'
   ],
 
   components: true,
 
-  colorMode: {
+  /* colorMode: {
     preference: 'dark',
     fallback: 'dark'
-  },
+  }, */
 
   content: {
     documentDriven: true,
@@ -238,6 +239,7 @@ export default defineNuxtConfig({
 
   build: {
     transpile: [
+      '@vuepic/vue-datepicker',
       '@fortawesome/fontawesome-svg-core',
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/free-regular-svg-icons',

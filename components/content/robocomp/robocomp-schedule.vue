@@ -6,6 +6,7 @@ import { Chart } from 'vue-chartjs'
 import prepareDataForSchedule from '~/helpers/prepareDataForSchedule'
 
 import type { ScheduleResponse } from '~/server/api/schedule/index.get'
+import type { Dataset } from '~/types'
 
 const key = ref((Math.random() * 10).toString())
 
@@ -13,12 +14,15 @@ const interval = ref(null as null | number)
 
 const $props = defineProps<{
   scheduleName: 'robots' | 'events'
+  chartLabels?: string[]
+  chartDatasets?: Dataset[]
+  chartConfig?: Record<string, unknown>
 }>()
 
 const chartData = ref({
   labels: [] as string[],
   // datasets: [{ data: [Date.now(), Date.now() + (60 * 60 * 1000) / 2, Date.now() - 60 * 60 * 1000] }]
-  datasets: [] as { label: string; backgroundColor: string; data: ([number, number] | null)[] }[]
+  datasets: [] as Dataset[]
 })
 
 const annotationsConfig = ref({
@@ -118,17 +122,34 @@ useLazyAsyncData(`${$props.scheduleName}-schedule`, async () => {
     return null
   }
 
+  if ($props.chartLabels && $props.chartDatasets && $props.chartConfig) {
+    chartData.value.labels = $props.chartLabels
+    annotationsConfig.value.annotations = $props.chartConfig.annotations as any
+    scalesConfig.value.y.min = $props.chartConfig.yMin as any
+    scalesConfig.value.y.max = $props.chartConfig.yMax as any
+    chartData.value.datasets = $props.chartDatasets
+
+    key.value = (Math.random() * 10).toString()
+    return null
+  }
+
   const response = await $fetch('/api/schedule')
 
   if (response instanceof H3Error || !response.data) {
     return null
   }
 
-  const { results: schedule, competitionNames, competitionKeys, scheduleTypes } = (response as ScheduleResponse).data
+  const {
+    results: schedule,
+    competitionNames,
+    competitionKeys,
+    scheduleTypes,
+    events
+  } = (response as ScheduleResponse).data
 
   const data = prepareDataForSchedule($props.scheduleName, schedule, competitionNames, competitionKeys, scheduleTypes)
 
-  chartData.value.labels = competitionNames
+  chartData.value.labels = $props.scheduleName === 'robots' ? competitionNames : events
   annotationsConfig.value.annotations = data.annotations
   scalesConfig.value.y.min = data.eventStartDate
   scalesConfig.value.y.max = data.eventEndDate
@@ -149,6 +170,10 @@ onMounted(() => {
 
   if (interval.value) {
     clearInterval(interval.value)
+  }
+
+  if ($props.chartLabels && $props.chartDatasets && $props.chartConfig) {
+    return
   }
 
   setInterval(() => {
