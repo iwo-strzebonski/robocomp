@@ -17,6 +17,7 @@ export interface ScheduleResponse {
     competitionNames: string[]
     competitionKeys: string[]
     scheduleTypes: string[]
+    events: string[]
   }
   statusCode: number
 }
@@ -28,6 +29,7 @@ export default defineEventHandler(async (): Promise<ScheduleResponse | H3Error> 
     const schedules = (await db
       .selectFrom('robocomp.schedules' as any)
       .select([
+        'id',
         sql<string>`REPLACE(name, ' ' || CAST(${new Date().getFullYear()} AS VARCHAR(4)), '')`.as('name'),
         'start_date',
         'end_date',
@@ -48,13 +50,18 @@ export default defineEventHandler(async (): Promise<ScheduleResponse | H3Error> 
         type: schedule.name.split(' ')[0]
       }))
 
+    const events = schedules
+      .filter((schedule) => schedule.competition === 'events')
+      .map((schedule) => schedule.name.split(' ').slice(1).join(' '))
+
     return {
       statusCode: 200,
       data: {
         results: schedules as Schedule[],
         competitionNames: [...new Set(competitions.map((competition) => competition.name))],
         competitionKeys: [...new Set(competitions.map((competition) => competition.key!))],
-        scheduleTypes: [...new Set(competitions.map((competition) => competition.type))]
+        scheduleTypes: [...new Set(competitions.map((competition) => competition.type))],
+        events
       }
     }
   } catch (error) {

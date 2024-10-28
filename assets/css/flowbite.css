@@ -53,3 +53,9 @@ button.flowbite.bg-green-700 {
   @apply !text-neutral-400;
   @apply border-2 !border-neutral-900;
 }
+
+.flowbite-table{
+  display: table;
+  content: "";
+  clear: both;
+}
