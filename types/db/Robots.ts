@@ -4,7 +4,7 @@ export default interface RobotTable {
   id: Generated<number>
   robot_no: number
   name: string
-  year: Generated<Date>
+  year: Generated<number>
   team: number
   competition: string
   status: Generated<string>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { H3Error } from 'h3'
-import Qty from 'js-quantities'
 import { Chart } from 'vue-chartjs'
 
 import prepareDataForSchedule from '~/helpers/prepareDataForSchedule'
+import CHART_OPTIONS from '~/settings/charts/schedule.chart'
 
 import type { ScheduleResponse } from '~/server/api/schedule/index.get'
 import type { Dataset } from '~/types'
@@ -25,97 +25,7 @@ const chartData = ref({
   datasets: [] as Dataset[]
 })
 
-const annotationsConfig = ref({
-  drawTime: 'afterDatasetsDraw',
-  annotations: {}
-})
-
-const scalesConfig = ref({
-  x: {
-    display: true,
-    stacked: true,
-    ticks: {
-      maxRotation: 90,
-      minRotation: 45
-    }
-  },
-  y: {
-    reverse: true,
-    min: 0,
-    max: 1,
-    ticks: {
-      stepSize: 30
-    },
-    display: true,
-    type: 'time',
-    time: {
-      unit: 'minute',
-      tooltipFormat: 'HH:mm',
-      displayFormats: {
-        minute: 'HH:mm'
-      }
-    }
-  }
-})
-
-const chartOptions = computed(() => ({
-  // responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { display: true },
-    tooltip: {
-      enabled: true,
-
-      callbacks: {
-        title: (items: { label: string; dataset: { label: string } }[]) =>
-          `${items[0].label} (${items[0].dataset.label})`,
-        label: (ctx: { label: string; dataset: { label: string }; raw: number[] }) => {
-          const label = []
-
-          if (!Array.isArray(ctx.raw)) {
-            return ctx.label
-          }
-
-          const timeDelta = ctx.raw[1] - ctx.raw[0]
-          const duration = Qty(timeDelta, 'ms').to('h').scalar
-          const hours = duration | 0
-          const minutes = (duration - (duration | 0)) * 60
-          const minutesStr = minutes < 10 ? `0${minutes}` : minutes
-
-          label.push(`Czas trwania ${hours}:${minutesStr} h`)
-
-          label.push(`Start: ${new Date(ctx.raw[0]).toLocaleTimeString().slice(0, -3)}`)
-          label.push(`Koniec: ${new Date(ctx.raw[1]).toLocaleTimeString().slice(0, -3)}`)
-
-          return label
-        }
-      }
-    },
-    annotation: annotationsConfig.value,
-    datalabels: {
-      display: true,
-      color: (ctx: { dataset: { label: string } }) => (ctx.dataset.label === 'Finał' ? 'white' : 'black'),
-      formatter: (value: number, ctx: { dataset: { label: string } }) => {
-        if (!Array.isArray(value)) {
-          return null
-        }
-
-        /*
-        const timeDelta = value[1] - value[0]
-        const duration = Qty(timeDelta, 'ms').to('h').scalar
-        const hours = duration | 0
-        const minutes = (duration - (duration | 0)) * 60
-        const minutesStr = minutes < 10 ? `0${minutes}` : minutes
-
-        return ctx.dataset.label === 'Finał' ? ctx.dataset.label : `${ctx.dataset.label}\n(${hours}:${minutesStr} h)`
-        */
-
-        return ctx.dataset.label
-      }
-    }
-  },
-  scales: scalesConfig.value
-}))
+const chartOptions = ref(CHART_OPTIONS)
 
 useLazyAsyncData(`${$props.scheduleName}-schedule`, async () => {
   if (import.meta.server) {
@@ -124,9 +34,9 @@ useLazyAsyncData(`${$props.scheduleName}-schedule`, async () => {
 
   if ($props.chartLabels && $props.chartDatasets && $props.chartConfig) {
     chartData.value.labels = $props.chartLabels
-    annotationsConfig.value.annotations = $props.chartConfig.annotations as any
-    scalesConfig.value.y.min = $props.chartConfig.yMin as any
-    scalesConfig.value.y.max = $props.chartConfig.yMax as any
+    chartOptions.value.plugins.annotation.annotations = $props.chartConfig.annotations as any
+    chartOptions.value.scales.y.min = $props.chartConfig.yMin as any
+    chartOptions.value.scales.y.max = $props.chartConfig.yMax as any
     chartData.value.datasets = $props.chartDatasets
 
     key.value = (Math.random() * 10).toString()
@@ -150,9 +60,9 @@ useLazyAsyncData(`${$props.scheduleName}-schedule`, async () => {
   const data = prepareDataForSchedule($props.scheduleName, schedule, competitionNames, competitionKeys, scheduleTypes)
 
   chartData.value.labels = $props.scheduleName === 'robots' ? competitionNames : events
-  annotationsConfig.value.annotations = data.annotations
-  scalesConfig.value.y.min = data.eventStartDate
-  scalesConfig.value.y.max = data.eventEndDate
+  chartOptions.value.plugins.annotation.annotations = data.annotations
+  chartOptions.value.scales.y.min = data.eventStartDate
+  chartOptions.value.scales.y.max = data.eventEndDate
   chartData.value.datasets = data.datasets
 
   key.value = (Math.random() * 10).toString()
