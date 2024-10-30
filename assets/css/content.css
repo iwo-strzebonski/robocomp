@@ -46,6 +46,11 @@
   @apply bg-white;
 }
 
+.markdown-content.partner-page main p {
+  @apply text-center;
+  @apply mb-0;
+}
+
 .markdown-content h1 br,
 .markdown-content h2 br {
   @apply block sm:hidden;

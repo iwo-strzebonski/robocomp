@@ -99,7 +99,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :key="key" class="h-[20rem] md:h-[25rem] lg:h-[30rem] xl:h-[40rem] px-4">
+  <div :key="key" class="h-[calc(100vh_-_20rem)] md:h-[calc(100vh_-_22rem)] px-4 dark:bg-white rounded-lg">
     <lazy-client-only>
       <!-- @vue-expect-error: VueChartJs is not typed properly -->
       <Chart :id="key" :options="chartOptions" :data="chartData" type="bar" />

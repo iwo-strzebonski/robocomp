@@ -260,7 +260,7 @@ async function saveSchedule() {
     </section>
 
     <section v-show="schedule.robots.labels.length">
-      <RobocompSchedule
+      <ScheduleChart
         :key="rKey"
         :chart-labels="schedule.robots.labels"
         :chart-datasets="schedule.robots.datasets"
@@ -271,7 +271,7 @@ async function saveSchedule() {
     </section>
 
     <section v-show="schedule.events.labels.length">
-      <RobocompSchedule
+      <ScheduleChart
         :key="eKey"
         :chart-labels="schedule.events.labels"
         :chart-datasets="schedule.events.datasets"

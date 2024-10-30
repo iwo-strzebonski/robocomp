@@ -1,8 +1,10 @@
 import { createKysely } from '@vercel/postgres-kysely'
+import { sql } from 'kysely'
+
+import { Competition } from '~/settings/constants'
 
 import type { NuxtError } from '@nuxt/types'
 import type { Database } from '~/types/db/Database'
-import { sql } from 'kysely'
 
 export enum StatsTypes {
   'competitions' = 'competitions',
@@ -24,18 +26,19 @@ export interface StatsResultsBase extends Record<StatsTypes, unknown> {
   average: {
     avg_members_count: number
     avg_robots_count: number
-  }[]
+  }
   total: {
+    total_teams: number
     total_members_count: number
     total_robots_count: number
-  }[]
+  }
 }
 
 export type StatsResults = Partial<StatsResultsBase>
 
 export interface StatsResponse {
   statusCode: number
-  results: StatsResults
+  data: StatsResults
 }
 
 export default defineEventHandler(async (event): Promise<StatsResponse | NuxtError> => {
@@ -78,40 +81,49 @@ export default defineEventHandler(async (event): Promise<StatsResponse | NuxtErr
     for (const type of uniqueTypes) {
       switch (type) {
         case StatsTypes.competitions:
-          results.competitions = await db
-            .withSchema('robocomp')
-            .selectFrom('robots')
-            .innerJoin('competitions', 'robots.competition', 'competitions.name')
-            .select(({ fn }) => [
-              sql`competitions.name as competition`,
-              fn.countAll<number>().as('count'),
-              'competitions.color'
-            ])
-            .groupBy(['competitions.name', 'competitions.color'])
-            .orderBy('competitions.name')
-            .where('year', '=', Number(year))
-            .execute()
-
+          results.competitions = (
+            (await db
+              .withSchema('robocomp')
+              .selectFrom('robots')
+              .innerJoin('competitions', 'robots.competition', 'competitions.name')
+              .select(({ fn }) => [
+                sql`competitions.name as competition`,
+                fn.countAll().as('count'),
+                'competitions.color'
+              ])
+              .groupBy(['competitions.name', 'competitions.color'])
+              .orderBy('competitions.name')
+              .where('year', '=', Number(year))
+              .execute()) || []
+          ).map((row) => ({
+            ...row,
+            competition: Competition[row.competition as keyof typeof Competition]
+          }))
           break
+
         case StatsTypes.average:
           results.average = await db
-            .selectFrom('robocomp.teams_details')
+            .withSchema('robocomp')
+            .selectFrom('teams_details')
             .select(({ fn }) => [
-              fn.avg<number>('members_count').as('avg_members_count'),
-              fn.avg<number>('robots_count').as('avg_robots_count')
+              fn.avg('members_count').as('avg_members_count'),
+              fn.avg('robots_count').as('avg_robots_count')
             ])
             .where('year', '=', Number(year))
-            .execute()
+            .executeTakeFirstOrThrow()
           break
+
         case StatsTypes.total:
           results.total = await db
-            .selectFrom('robocomp.teams_details')
+            .withSchema('robocomp')
+            .selectFrom('teams_details')
             .select(({ fn }) => [
-              fn.sum<number>('members_count').as('total_members_count'),
-              fn.sum<number>('robots_count').as('total_robots_count')
+              fn.countAll().as('total_teams'),
+              fn.sum('members_count').as('total_members_count'),
+              fn.sum('robots_count').as('total_robots_count')
             ])
             .where('year', '=', Number(year))
-            .execute()
+            .executeTakeFirstOrThrow()
           break
       }
     }
@@ -120,7 +132,7 @@ export default defineEventHandler(async (event): Promise<StatsResponse | NuxtErr
 
     return {
       statusCode: 200,
-      results
+      data: results
     }
   } catch (error) {
     console.error(error)

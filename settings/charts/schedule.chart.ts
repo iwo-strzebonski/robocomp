@@ -37,7 +37,7 @@ const CHART_CONFIG = {
   // responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: true },
+    legend: { display: true, position: 'top' },
     tooltip: {
       enabled: true,
 

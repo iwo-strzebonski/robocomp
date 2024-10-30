@@ -1,6 +1,8 @@
 import { createKysely } from '@vercel/postgres-kysely'
 import { sql } from 'kysely'
 
+import { Competition } from '~/settings/constants'
+
 import type { H3Error } from 'h3'
 
 export interface Schedule {
@@ -46,7 +48,7 @@ export default defineEventHandler(async (): Promise<ScheduleResponse | H3Error> 
       .toSorted((a, b) => b.competition!.localeCompare(a.competition!))
       .map((schedule) => ({
         key: schedule.competition,
-        name: schedule.name.split(' ').slice(1).join(' '),
+        name: Competition[schedule.competition as keyof typeof Competition],
         type: schedule.name.split(' ')[0]
       }))
 
@@ -57,7 +59,12 @@ export default defineEventHandler(async (): Promise<ScheduleResponse | H3Error> 
     return {
       statusCode: 200,
       data: {
-        results: schedules as Schedule[],
+        results: schedules.map((schedule) => ({
+          ...schedule,
+          name: schedule.competition
+            ? `${schedule.name.split(' ')[0]} ${Competition[schedule.competition as keyof typeof Competition]}`
+            : schedule.name
+        })) as Schedule[],
         competitionNames: [...new Set(competitions.map((competition) => competition.name))],
         competitionKeys: [...new Set(competitions.map((competition) => competition.key!))],
         scheduleTypes: [...new Set(competitions.map((competition) => competition.type))],

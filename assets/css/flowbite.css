@@ -36,15 +36,16 @@ button.flowbite.bg-green-700 {
   @apply !bg-green-700;
   @apply hover:!bg-green-800;
 }
-
+.flowbite-table thead,
 .flowbite thead {
-  @apply !bg-neutral-600;
+  @apply dark:!bg-neutral-600;
 }
 
+.flowbite-table tbody tr,
 .flowbite tbody tr {
-  @apply !bg-neutral-800;
-  @apply hover:!bg-neutral-700;
-  @apply [&:not(:last-child)]:border-neutral-700;
+  @apply dark:!bg-neutral-800;
+  @apply dark:hover:!bg-neutral-700;
+  @apply dark:[&:not(:last-child)]:border-neutral-700;
 }
 
 .flowbite.toast,
@@ -54,7 +55,7 @@ button.flowbite.bg-green-700 {
   @apply border-2 !border-neutral-900;
 }
 
-.flowbite-table{
+.flowbite-table {
   display: table;
   content: "";
   clear: both;

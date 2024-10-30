@@ -27,16 +27,18 @@ const { status } = useLazyAsyncData('competitions-chart', async () => {
     }
   })
 
-  if (response instanceof H3Error || !response.results) {
+  if (response instanceof H3Error || !response.data) {
     return null
   }
 
-  const { results } = response
+  const {
+    data: { competitions }
+  } = response
 
-  const labels = results.competitions?.map((result) => result.competition) || []
+  const labels = competitions?.map((result) => result.competition) || []
   const datasets = {
-    data: results.competitions?.map((result) => Number(result.count)) || [],
-    backgroundColor: results.competitions?.map((result) => result.color || '#000000') || []
+    data: competitions?.map((result) => Number(result.count)) || [],
+    backgroundColor: competitions?.map((result) => result.color || '#000000') || []
   }
 
   chartData.value.labels = labels
@@ -60,7 +62,7 @@ onBeforeMount(() => {
   <div>
     <span v-if="status === 'pending'">Ładowanie...</span>
 
-    <div :key="key" class="h-[20rem] md:h-[25rem] lg:h-[30rem] xl:h-[40rem] px-4">
+    <div :key="key" class="h-[15rem] sm:h-[calc(100vh_-_35.5rem)] px-4">
       <lazy-client-only>
         <!-- @vue-expect-error: VueChartJs is not typed properly -->
         <Chart :id="key" :options="chartOptions" :data="chartData" type="doughnut" />
