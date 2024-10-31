@@ -121,6 +121,18 @@ const $props = defineProps<{
 
         <span class="flex flex-col items-center">
           <NuxtLink
+            :to="$props.linkType === 'internal' ? '/partners/mab-robotics' : 'https://www.mabrobotics.pl/'"
+            :target="$props.linkType === 'internal' ? '_self' : '_blank'"
+            rel="noopener noreferrer"
+            class="partner-logo"
+            style="background-image: url('/logo/mab-robotics.png')"
+          />
+
+          <span v-if="$props.logoSize !== 'small'" class="font-bold text-xl">MAB Robotics Sp. z o.o.</span>
+        </span>
+
+        <span class="flex flex-col items-center">
+          <NuxtLink
             :to="$props.linkType === 'internal' ? '/partners/manu' : 'https://manuonline.pl/'"
             :target="$props.linkType === 'internal' ? '_self' : '_blank'"
             rel="noopener noreferrer"
@@ -165,7 +177,7 @@ const $props = defineProps<{
             style="background-image: url('/logo/miasto-krakow.jpg')"
           />
 
-          <span class="font-bold text-xl">Aleksander Miszalski</span>
+          <span class="font-bold text-xl mt-2">Aleksander Miszalski</span>
           <span class="text-lg">Prezydent Miasta Krakowa</span>
         </span>
       </span>
@@ -192,7 +204,7 @@ const $props = defineProps<{
             to="https://iet.agh.edu.pl/"
             target="_blank"
             rel="noopener noreferrer"
-            class="partner-logo p-12"
+            class="partner-logo !p-6"
             style="background-image: url('/logo/wiet.png')"
           />
 
