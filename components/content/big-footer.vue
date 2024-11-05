@@ -212,6 +212,18 @@ const $props = defineProps<{
           <span v-if="$props.logoSize !== 'small'" class="font-bold text-base"> Informatyki, Elektroniki </span>
           <span v-if="$props.logoSize !== 'small'" class="font-bold text-base"> i Telekomunikacji </span>
         </span>
+
+        <span class="flex flex-col items-center">
+          <NuxtLink
+            :to="$props.linkType === 'internal' ? '/partners/uciekamy-cukrzycy' : 'https://www.uciekamycukrzycy.pl'"
+            :target="$props.linkType === 'internal' ? '_self' : '_blank'"
+            rel="noopener noreferrer"
+            class="partner-logo !p-6"
+            style="background-image: url('/logo/uciekamy-cukrzycy.png')"
+          />
+
+          <span v-if="$props.logoSize !== 'small'" class="text-lg">Uciekamy Cukrzycy</span>
+        </span>
       </span>
     </div>
   </div>
