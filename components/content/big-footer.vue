@@ -147,6 +147,24 @@ const $props = defineProps<{
     </div>
 
     <div class="flex flex-col items-center gap-8">
+      <div class="primary-header mt-6">Partner Medyczny</div>
+
+      <span class="inline-flex gap-8 flex-wrap justify-center">
+        <span class="flex flex-col items-center">
+          <NuxtLink
+            :to="$props.linkType === 'internal' ? '/partners/scanmed' : 'https://www.scanmed.pl'"
+            :target="$props.linkType === 'internal' ? '_self' : '_blank'"
+            rel="noopener noreferrer"
+            class="partner-logo"
+            style="background-image: url('/logo/scanmed.jpg')"
+          />
+
+          <span v-if="$props.logoSize !== 'small'" class="font-bold text-xl">Grupa Scanmed</span>
+        </span>
+      </span>
+    </div>
+
+    <div class="flex flex-col items-center gap-8">
       <div class="primary-header mt-6">Patroni Medialni</div>
 
       <span class="inline-flex gap-8 flex-wrap justify-center">
