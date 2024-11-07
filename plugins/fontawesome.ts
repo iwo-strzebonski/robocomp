@@ -8,7 +8,9 @@ import {
   faGaugeSimpleHigh,
   faRotateLeft,
   faFloppyDisk,
-  faCheckSquare
+  faCheckSquare,
+  faChevronLeft,
+  faChevronRight
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -20,7 +22,17 @@ library.add(faSquareFacebook, faInstagram)
 // Regular icons
 library.add(faSun, faEye, faEyeSlash, faCalendar, faSquare)
 // Solid icons
-library.add(faMoon, faBars, faSignOutAlt, faGaugeSimpleHigh, faRotateLeft, faFloppyDisk, faCheckSquare)
+library.add(
+  faMoon,
+  faBars,
+  faSignOutAlt,
+  faGaugeSimpleHigh,
+  faRotateLeft,
+  faFloppyDisk,
+  faCheckSquare,
+  faChevronLeft,
+  faChevronRight
+)
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component('fa-icon', FontAwesomeIcon)
