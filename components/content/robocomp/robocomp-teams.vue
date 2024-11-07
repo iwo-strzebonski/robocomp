@@ -27,7 +27,7 @@
   </lazy-client-only>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { H3Error } from 'h3'
 import type { TeamsResponse } from '~/server/api/teams/index.get'
 
