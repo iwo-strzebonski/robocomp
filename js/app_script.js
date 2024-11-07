@@ -141,4 +141,3 @@ function submitForm(e, apiUrl) {
     Logger.log('Error sending form data: ' + error.toString())
   }
 }
-
