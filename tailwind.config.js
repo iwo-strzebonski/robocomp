@@ -4,7 +4,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./node_modules/flowbite/**/*.{js,ts}",
+    './node_modules/flowbite/**/*.{js,ts}',
     './node_modules/flowbite.{js,ts}',
     './node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}',
     './components/**/*.{js,vue,ts}',
