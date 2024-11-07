@@ -5,10 +5,7 @@ import { sql } from 'kysely'
 import { isFormsResponse, type FormsResponse, type Participant, type Robot } from '~/types/Forms_response'
 
 import type { Database } from '~/types/db/Database'
-import type ParticipantTable from '~/types/db/Participants'
-import type RobotTable from '~/types/db/Robots'
-import type TeamTable from '~/types/db/Teams'
-import type TeamsParticipantsTable from '~/types/db/TeamsParticipants'
+import type { ParticipantTable, RobotTable, TeamTable, TeamsParticipantsTable }  from '~/types/db/Schema'
 
 function insertUpdateTeam(team_name: string, team_id: number | null = null) {
   if (team_id) {
