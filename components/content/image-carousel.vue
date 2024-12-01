@@ -48,7 +48,7 @@ function getImagePositionClass(index: number): string {
 </script>
 
 <template>
-  <div id="default-carousel" class="relative w-full" data-carousel="slide">
+  <div id="default-carousel" class="relative w-full">
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
       <!-- Items -->
@@ -56,7 +56,7 @@ function getImagePositionClass(index: number): string {
         v-for="(image, index) in $props.images"
         :id="`image-${index}`"
         :key="image.alt"
-        class="duration-700 ease-in-out absolute inset-y-0 -inset-x-[0.5px] transition-transform z-10"
+        class="duration-700 ease-in-out absolute inset-y-0 -inset-x-[0.5px] transition-transform !z-0"
         :class="`${getImagePositionClass(index)}`"
         data-carousel-item
       >

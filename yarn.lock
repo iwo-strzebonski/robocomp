@@ -1204,6 +1204,16 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@babylonjs/core@^7.37.0":
+  version "7.37.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-7.37.0.tgz#7009a165487b35c69596af12e16f202d45ae54e2"
+  integrity sha512-BwwZqRr35V9rasMoApBn7TDubulzL9g6+96HhEqYiRQYqJ5arZTEdhanmYgNDy5zem4zF/k4srCi7HmWH212Aw==
+
+"@babylonjs/loaders@^7.37.0":
+  version "7.37.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/loaders/-/loaders-7.37.0.tgz#8d6ce5156671c888edf305c448d0dfed8ff129c2"
+  integrity sha512-0iX+JYjIDP0enFYTrBUQp1OmCrJ75d6oKfZw9nx2mNuutrsB14db3OrP0KQ7a4ZEeE9RTiydoSUtQ+WSVoxThA==
+
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
@@ -2395,6 +2405,11 @@
   dependencies:
     "@netlify/node-cookies" "^0.1.0"
     urlpattern-polyfill "8.0.2"
+
+"@nextcloud/browserslist-config@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@nextcloud/browserslist-config/-/browserslist-config-3.0.1.tgz#d05a06920e80a8187806b3f2f3abe26308debc9f"
+  integrity sha512-GZTxL5fsDgmFoot/qnRurjHCuHjSfOg+A6t4+P2TySXua2Q1Ex0lecZYlSnRuOR/W5BGOZ06ITTA/hbkSh1Ypg==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"

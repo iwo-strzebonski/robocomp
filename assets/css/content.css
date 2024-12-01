@@ -38,14 +38,17 @@
   @apply flex flex-row justify-start md:flex-col text-2xl lg:text-3xl;
 }
 
+.markdown-content.docs-page h2, 
 .markdown-content.partner-page h2 {
   @apply mt-4 mb-2;
 }
 
+.markdown-content.docs-page .big-footer, 
 .markdown-content.partner-page .big-footer {
   @apply bg-white;
 }
 
+.markdown-content.docs-page main p,
 .markdown-content.partner-page main p {
   @apply text-center;
   @apply mb-0;

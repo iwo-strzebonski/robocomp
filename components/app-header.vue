@@ -1,17 +1,17 @@
 <template>
   <header id="page-header" class="h-20 w-full">
-    <div class="fixed w-full z-50" :class="{ 'bg-black': !isAtTop }">
-      <div class="hidden md:block w-full">
-        <div class="flex items-center justify-between">
-          <NuxtLink to="/">
-            <NuxtImg src="/img/landing-page/logoHalfNoNeon.webp" height="128px" class="ml-4 mb-2" alt="ROBOCOMP Logo" />
+    <div class="fixed w-full z-50 h-20" :class="{ 'bg-black': !isAtTop }">
+      <div class="hidden md:block w-full h-full">
+        <div class="flex items-center justify-between h-full">
+          <NuxtLink to="/" class="ml-4">
+            <NuxtImg src="/img/landing-page/logoHalfNoNeon.webp" height="128px" alt="ROBOCOMP Logo" />
           </NuxtLink>
 
-          <div class="flex">
+          <div class="inline-flex justify-center items-center h-full">
             <NuxtLink
               v-for="link in headerLinks"
               :key="link.name"
-              class="header-item text-white"
+              class="header-item"
               :to="link.link"
               :target="link.external ? '_blank' : '_self'"
               @click="dropdownVisible = false"
@@ -27,9 +27,12 @@
                 <fa-icon icon="fa-solid fa-bars" class="h-4 w-4 text-white" />
               </lazy-client-only>
             </div>
+
             <transition name="slide-fade">
-              <div v-show="dropdownVisible" class="hidden absolute md:relative md:block z-40">
-                <div class="flex flex-col absolute top-full -right-full bg-white rounded-sm slide-in-left shadow">
+              <div v-show="dropdownVisible" class="absolute md:relative md:block z-40 top-1/2">
+                <div
+                  class="flex flex-col absolute -right-full bg-white rounded-sm slide-in-left shadow overflow-auto max-h-[calc(100vh_-_80px)]"
+                >
                   <NuxtLink
                     v-for="link in hamburgerLinks"
                     :key="link.name"
@@ -66,9 +69,10 @@
             </div>
           </div>
         </div>
+
         <transition name="slide-fade">
           <div v-show="dropdownVisible" class="w-full absolute md:hidden z-40">
-            <div class="flex flex-col text-center bg-white shadow">
+            <div class="flex flex-col text-center bg-white shadow overflow-auto max-h-[calc(100vh_-_5rem)]">
               <NuxtLink
                 v-for="link in filteredLinks"
                 :key="link.name"
@@ -96,11 +100,12 @@ const links = [
   { name: 'Lokalizacja', link: '/blog/location' },
   // { name: 'Głosowanie', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
   { name: 'Kontakt', link: '/blog/contact' },
-  // { name: 'O\xA0nas', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+  { name: 'O\xA0nas', link: '/blog/about' },
   { name: 'Galeria', link: '/blog/gallery' },
   { name: 'Patroni', link: '/partners' },
   { name: 'Statystyki', link: '/blog/stats' },
-  { name: 'Zespoły', link: '/blog/teams' }
+  { name: 'Zespoły', link: '/blog/teams' },
+  { name: 'Dokumentacja', link: '/docs' }
 ]
 
 const $route = useRoute()
@@ -141,7 +146,10 @@ onBeforeUnmount(() => {
 
 <style>
 .header-item {
-  @apply p-8;
+  @apply h-full inline-flex items-center;
+  @apply px-8;
+  @apply text-white;
+  @apply text-center;
 }
 
 .slide-fade-enter-active,

@@ -23,11 +23,14 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
+    "@babylonjs/core": "^7.37.0",
+    "@babylonjs/loaders": "^7.37.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
+    "@nextcloud/browserslist-config": "^3.0.1",
     "@nuxt/content": "^2.9.0",
     "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/robots": "^4.1.7",

@@ -87,6 +87,7 @@ h1 {
 }
 
 .index-page.markdown-content h1,
+.docs-page.markdown-content .primary-header,
 .partner-page.markdown-content .primary-header {
   @apply header-shadow header-shadow-after;
   @apply before:bg-sky-400;
@@ -94,12 +95,14 @@ h1 {
   @apply tracking-wide;
 }
 
+.docs-page.markdown-content .primary-header,
 .partner-page.markdown-content .primary-header {
   @apply !text-lg;
 }
 
 .primary-header,
 .blog-page.markdown-content h1,
+.docs-page.markdown-content h1,
 .partner-page.markdown-content h1 {
   @apply header-shadow;
   @apply before:bg-red-400;
