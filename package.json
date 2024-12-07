@@ -39,7 +39,7 @@
     "@pinia/nuxt": "^0.5.5",
     "@tailwindcss/typography": "^0.5.9",
     "@vercel/analytics": "^1.2.2",
-    "@vercel/postgres-kysely": "^0.6.0",
+    "@vercel/postgres-kysely": "^0.10.0",
     "@vercel/speed-insights": "^1.0.12",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^14.0.0",
