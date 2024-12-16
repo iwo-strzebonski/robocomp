@@ -49,7 +49,7 @@
     "chartjs-plugin-annotation": "^3.0.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "dotenv": "^16.3.1",
-    "eslint-plugin-jsdoc": "^46.9.1",
+    "eslint-plugin-jsdoc": "^50.6.1",
     "flowbite": "2.3.0",
     "flowbite-vue": "^0.1.6",
     "h3": "^1.9.0",
